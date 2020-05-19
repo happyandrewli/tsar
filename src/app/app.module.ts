@@ -89,6 +89,8 @@ const APPINIT_PROVIDES = [
 ];
 // #endregion
 
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { GlobalConfigModule } from './global-config.module';
@@ -113,7 +115,8 @@ import { STWidgetModule } from './shared/st-widget/st-widget.module';
     STWidgetModule,
     ...I18NSERVICE_MODULES,
     ...FORM_MODULES,
-    ...GLOBAL_THIRD_MODULES
+    ...GLOBAL_THIRD_MODULES,
+    environment.production ? [] : AkitaNgDevtools
   ],
   providers: [
     ...LANG_PROVIDES,

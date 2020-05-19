@@ -178,5 +178,8 @@
     "@schematics/angular:service": {
       "spec": false
     }
+  },
+  "cli": {
+    "defaultCollection": "@datorama/akita"
   }
 }
