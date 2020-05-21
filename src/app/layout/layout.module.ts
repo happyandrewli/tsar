@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
 import { LayoutDefaultComponent } from './default/default.component';
 import { HeaderFullScreenComponent } from './default/header/components/fullscreen.component';
-import { HeaderI18nComponent } from './default/header/components/i18n.component';
 import { HeaderIconComponent } from './default/header/components/icon.component';
 import { HeaderNotifyComponent } from './default/header/components/notify.component';
 import { HeaderSearchComponent } from './default/header/components/search.component';
@@ -31,7 +30,6 @@ const HEADERCOMPONENTS = [
   HeaderTaskComponent,
   HeaderIconComponent,
   HeaderFullScreenComponent,
-  HeaderI18nComponent,
   HeaderStorageComponent,
   HeaderUserComponent
 ];

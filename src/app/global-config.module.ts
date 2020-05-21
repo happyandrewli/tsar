@@ -29,33 +29,6 @@ if (!environment.production) {
   alainConfig.mock = { data: MOCKDATA };
 }
 
-// #region reuse-tab
-/**
- * 若需要[路由复用](https://ng-alain.com/components/reuse-tab)需要：
- * 1、增加 `REUSETAB_PROVIDES`
- * 2、在 `src/app/layout/default/default.component.html` 修改：
- *  ```html
- *  <section class="alain-default__content">
- *    <reuse-tab></reuse-tab>
- *    <router-outlet></router-outlet>
- *  </section>
- *  ```
- */
-// import { RouteReuseStrategy } from '@angular/router';
-// import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
-// alainProvides.push({
-//   provide: RouteReuseStrategy,
-//   useClass: ReuseTabStrategy,
-//   deps: [ReuseTabService],
-// } as any);
-
-// #endregion
-
-// #endregion
-
-// Please refer to: https://ng.ant.design/docs/global-config/en#how-to-use
-// #region NG-ZORRO Config
-
 import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
 
 const ngZorroConfig: NzConfig = {};
