@@ -1,8 +1,8 @@
-import { EntityState, StoreConfig, EntityStore, ActiveState } from '@datorama/akita';
-import { Survey } from './survey.model';
 import { Injectable } from '@angular/core';
+import { ActiveState, EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { Survey } from './survey.model';
 
-export interface SurveysState extends EntityState<Survey>, ActiveState { };
+export interface SurveysState extends EntityState<Survey>, ActiveState { }
 
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'surveys' })
