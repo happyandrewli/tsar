@@ -3,14 +3,16 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
 // single pages
 import { CallbackComponent } from './callback/callback.component';
+import { DashboardAnalysisComponent } from './dashboard/analysis/analysis.component';
 // dashboard pages
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardMonitorComponent } from './dashboard/monitor/monitor.component';
 // passport pages
 import { UserLoginComponent } from './passport/login/login.component';
 import { RouteRoutingModule } from './routes-routing.module';
 
 const COMPONENTS = [
-  DashboardComponent,
+  DashboardMonitorComponent,
+  DashboardAnalysisComponent,
   // passport pages
   UserLoginComponent,
   // single pages

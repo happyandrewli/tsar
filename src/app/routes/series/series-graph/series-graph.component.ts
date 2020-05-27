@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -10,6 +10,7 @@ import { FileSaverService } from 'ngx-filesaver';
 import { SeriesQuery } from 'src/app/state/series/series.query';
 import { SeriesService } from 'src/app/state/series/series.service';
 
+@UntilDestroy()
 @Component({
   selector: 'app-series-series-series-graph',
   templateUrl: './series-graph.component.html',
@@ -60,7 +61,6 @@ export class SeriesGraphComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.sChart) {
           // this.sChart.changeData(formattedSeriesList);
           // this.sChart.changeData(this.testData);
-          console.log(formattedSeriesList);
           // setTimeout(() => this.sChart.changeData(formattedSeriesList), 2000);
           this.ngZone.runOutsideAngular(() => setTimeout(() => this.sChart.changeData(formattedSeriesList), 0));
         } else {

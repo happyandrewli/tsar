@@ -2,13 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SimpleGuard } from '@delon/auth';
 import { environment } from '@env/environment';
+
 // layout
 import { LayoutDefaultComponent } from '../layout/default/default.component';
 import { LayoutPassportComponent } from '../layout/passport/passport.component';
+
 // single pages
 import { CallbackComponent } from './callback/callback.component';
+
 // dashboard pages
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardAnalysisComponent } from './dashboard/analysis/analysis.component';
+import { DashboardMonitorComponent } from './dashboard/monitor/monitor.component';
+
 // passport pages
 import { UserLoginComponent } from './passport/login/login.component';
 
@@ -18,8 +23,9 @@ const routes: Routes = [
     component: LayoutDefaultComponent,
     canActivate: [SimpleGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent, data: { title: 'dashboard' } },
+      { path: '', redirectTo: 'dashboard/monitor', pathMatch: 'full' },
+      { path: 'dashboard/monitor', component: DashboardMonitorComponent },
+      { path: 'dashboard/analysis', component: DashboardAnalysisComponent },
       { path: 'series', loadChildren: () => import('./series/series.module').then(m => m.SeriesModule) },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
     ]

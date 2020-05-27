@@ -7,6 +7,9 @@
 # Only exists if Bazel was run
 /bazel-out
 
+/src/assets/style.dark.css
+/src/assets/style.compact.css
+
 # dependencies
 /node_modules
 

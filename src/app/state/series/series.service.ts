@@ -231,7 +231,7 @@ export class SeriesService {
       }
     }
 
-    if (filters.view !== 'BOTH') {
+    if (filters.view && filters.view !== 'BOTH') {
       if (dfParams) {
         dfParams = dfParams + ' and ' + '(view=' + filters.view + ')';
       } else {

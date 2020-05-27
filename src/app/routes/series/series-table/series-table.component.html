@@ -59,8 +59,8 @@
     <thead>
       <tr>
         <th nzLeft></th>
-        <th nzLeft>Series <button nz-button nzSize="small" nzType="dashed" (click)="upsert()">Add A New Series</button></th>
-        <th nzLeft>Naics Code / Topic / Subtopic</th>
+        <th nzLeft nzWidth="200px">Series <button nz-button nzSize="small" nzType="dashed" (click)="upsert()">Add A New Series</button></th>
+        <th nzLeft nzWidth="200px">Naics Code / Topic / Subtopic</th>
         <th nzLeft>Table</th>
         <ng-container *ngFor="let statP of valHeaders$ | async">
           <th *ngIf="statP >= (from$ | async) && statP <= (to$ | async)">{{ statP.slice(3) }}</th>

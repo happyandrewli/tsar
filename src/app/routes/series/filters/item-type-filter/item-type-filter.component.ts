@@ -1,7 +1,6 @@
 import { Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-// import { untilDestroyed } from '@ngneat/until-destroy';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { switchMap } from 'rxjs/operators';
 
@@ -9,6 +8,7 @@ import { SeriesQuery } from 'src/app/state/series/series.query';
 import { SeriesService } from 'src/app/state/series/series.service';
 import { SurveysService } from 'src/app/state/survey/surveys.service';
 
+@UntilDestroy()
 @Component({
   selector: 'app-item-type-filter',
   templateUrl: './item-type-filter.component.html',

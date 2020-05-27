@@ -1,0 +1,192 @@
+<page-header [content]="headerContent" [title]="''">
+  <ng-template #headerContent>
+    <div class="content">
+      <div class="avatar">
+        <nz-avatar [nzText]="(activeSurvey$ | async)?.title" [nzSize]="64"></nz-avatar>
+      </div>
+      <div class="desc">
+        <div class="desc-title">
+          TSAR POC Project
+          <nz-button-group>
+            <button nz-button nzType="primary" nzGhost>{{ (activeSurvey$ | async)?.title }}</button>
+            <button nz-button nzType="primary" nzGhost nz-dropdown [nzDropdownMenu]="menu1" nzPlacement="bottomRight">
+              <i nz-icon nzType="snippets"></i>
+            </button>
+            <nz-dropdown-menu #menu1="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item *ngFor="let survey of surveys$ | async" (click)="setActive(survey.id)">
+                  <i nz-icon nzType="sketch"></i>
+                  {{ survey.title }}
+                </li>
+              </ul>
+            </nz-dropdown-menu>
+          </nz-button-group>
+        </div>
+        <div>
+          The Time Series Analytic Repository (TSAR) is an integrated system of software and data for the storage and manipulation of
+          economic time series. Economic time series are vectors of data values where each data value represents the level of some economic
+          activity for a specified time period. This system is designed to create, save, access, manipulate, and display economic time
+          series. The systems integrated tools are available in an interactive graphical user interface computing environment.
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <!-- <ng-template #extra>
+    <div class="page-extra">
+      <div>
+        <p>Survey</p>
+        <p>2</p>
+      </div>
+      <div>
+        <p>rank</p>
+        <p>
+          8
+          <span> / 24</span>
+        </p>
+      </div>
+      <div>
+        <p>Visits</p>
+        <p>2,223</p>
+      </div>
+    </div>
+  </ng-template> -->
+</page-header>
+
+<div nz-row [nzGutter]="24">
+  <div nz-col nzXs="24" nzSm="24" nzMd="16">
+    <nz-card nzTitle="Recently Viewed Visualizations" [nzBordered]="false">
+      <nz-tabset nzLinkRouter>
+        <!-- <nz-tab *ngFor="let viz of recentlyViewedViz" [nzTitle]="nzTabHeading">
+          <ng-template #nzTabHeading>
+            <div nz-row [nzGutter]="8" style="width: 138px; margin: 8px 0;">
+              <div nz-col [nzSpan]="12">
+                left
+              </div>
+              <div nz-col [nzSpan]="12">
+                right
+              </div>
+            </div>
+          </ng-template>
+        </nz-tab> -->
+        <nz-tab [nzTitle]="nzTabHeading1">
+          <ng-template #nzTabHeading1>
+            <div [routerLink]="['/series/tview']">
+              <nz-statistic [nzTitle]="'Click to Expand'" [nzPrefix]="prefixTpl1" [nzValue]="'Table View'">
+                <ng-template #prefixTpl1><i nz-icon nzType="table"></i></ng-template>
+              </nz-statistic>
+            </div>
+          </ng-template>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="nzTabHeading2">
+          <ng-template #nzTabHeading2>
+            <div [routerLink]="['/series/gview']">
+              <nz-statistic [nzTitle]="'Click to Expand'" [nzPrefix]="prefixTpl2" [nzValue]="'Graph View'">
+                <ng-template #prefixTpl2><i nz-icon nzType="line-chart"></i></ng-template>
+              </nz-statistic>
+            </div>
+          </ng-template>
+        </nz-tab>
+      </nz-tabset>
+    </nz-card>
+    <nz-card nzTitle="Your Surveys" [nzBordered]="false" class="ant-card__body-nopadding mb-lg survey-list">
+      <div
+        *ngFor="let survey of surveys$ | async"
+        nz-card-grid
+        [ngClass]="survey.id === (activeSurvey$ | async)?.id ? 'survey-grid-selected' : 'survey-grid'"
+      >
+        <nz-card
+          [nzBordered]="false"
+          class="ant-card__body-nopadding mb0"
+          (click)="setActive(survey.id)"
+          [ngStyle]="survey.id === (activeSurvey$ | async)?.id ? { 'background-color': '#fde3cf' } : null"
+        >
+          <nz-card-meta [nzTitle]="cardTitle" [nzDescription]="survey.description">
+            <ng-template #cardTitle>
+              <div class="card-title">
+                <nz-avatar
+                  [nzText]="survey.type"
+                  [nzSize]="'small'"
+                  [ngStyle]="survey.id === (activeSurvey$ | async)?.id ? { 'background-color': '#f56a00' } : null"
+                >
+                </nz-avatar>
+                <a>{{ survey.title }}</a>
+              </div>
+            </ng-template>
+          </nz-card-meta>
+          <div class="survey-item">
+            <a>{{ survey.server }}</a>
+            <span class="datetime">
+              over 2 days
+            </span>
+          </div>
+        </nz-card>
+      </div>
+    </nz-card>
+    <nz-card nzTitle="News/Announcements" [nzBordered]="false" class="ant-card__body-nopadding mb-lg active-card">
+      <nz-list nzSize="large" class="activities">
+        <nz-list-item>
+          <nz-list-item-meta [nzTitle]="activeTitle1" [nzDescription]="activeDescription1">
+            <ng-template #activeTitle1>
+              ACES survey will migrate to RHEL 7 this Thursday April 8th. Shortly, Kruti will submit a ticket to copy data from steps74 to
+              steps24 starting at 6:30pm tomorrow Wednesday April 8th.
+            </ng-template>
+            <ng-template #activeDescription1>
+              <span class="datetime">less than a minute</span>
+            </ng-template>
+          </nz-list-item-meta>
+        </nz-list-item>
+        <nz-list-item>
+          <nz-list-item-meta [nzTitle]="activeTitle2" [nzDescription]="activeDescription2">
+            <ng-template #activeTitle2>
+              Delete the contents of /data/steps/ACES/ on steps24 first and then rsync it from steps74 over.
+            </ng-template>
+            <ng-template #activeDescription2>
+              <span class="datetime">five minutes ago</span>
+            </ng-template>
+          </nz-list-item-meta>
+        </nz-list-item>
+      </nz-list>
+    </nz-card>
+  </div>
+  <div nz-col nzXs="24" nzSm="24" nzMd="8">
+    <nz-card nzTitle="Timeline" [nzBordered]="false">
+      <nz-timeline nzMode="alternate">
+        <nz-timeline-item>Create a services site 2015-09-01</nz-timeline-item>
+        <nz-timeline-item nzColor="green">Solve initial network problems 2015-09-01</nz-timeline-item>
+        <nz-timeline-item [nzDot]="dotTemplate"
+          >Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+          quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</nz-timeline-item
+        >
+        <nz-timeline-item nzColor="red">Network problems being solved 2015-09-01</nz-timeline-item>
+        <nz-timeline-item>Create a services site 2015-09-01</nz-timeline-item>
+        <nz-timeline-item [nzDot]="dotTemplate">Technical testing 2015-09-01</nz-timeline-item>
+      </nz-timeline>
+      <ng-template #dotTemplate>
+        <i nz-icon nzType="clock-circle-o" style="font-size: 16px;"></i>
+      </ng-template>
+    </nz-card>
+  </div>
+</div>
+
+<!-- <div nz-row nzGutter="16">
+  <div nz-col nzXs="24" nzMd="12">
+    <nz-card [nzBordered]="false" [nzTitle]="salesTitle">
+      <ng-template #salesTitle>
+        Sales Statistics
+        <small class="text-sm font-weight-normal">Business Expectations & Retail Sales Statistics</small>
+      </ng-template>
+      <g2-bar *ngIf="salesData" height="275" [data]="salesData"></g2-bar>
+    </nz-card>
+  </div>
+  <div nz-col nzXs="24" nzMd="12">
+    <nz-card [nzTitle]="growthTitle" [nzBordered]="false">
+      <ng-template #growthTitle>
+        Growth Rate
+        <small class="text-sm font-weight-normal">Business Expectations & Retail Sales Statistics</small>
+      </ng-template>
+      <g2-timeline *ngIf="offlineChartData" [data]="offlineChartData" [height]="239" [padding]="[0, 0, 0, 0]"
+        [titleMap]="{ y1: 'Earned', y2: 'spent' }"></g2-timeline>
+    </nz-card>
+  </div>
+</div> -->

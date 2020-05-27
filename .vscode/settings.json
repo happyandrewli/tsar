@@ -3,7 +3,8 @@
   "prettier.stylelintIntegration": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll.tslint": true,
+    "source.fixAll.stylelint": true
   },
   "editor.tabSize": 2,
   "editor.detectIndentation": false,

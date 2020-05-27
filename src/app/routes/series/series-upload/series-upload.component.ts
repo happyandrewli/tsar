@@ -6,13 +6,15 @@ import { UploadFile, UploadXHRArgs } from 'ng-zorro-antd/upload';
 
 import { FileSaverService } from 'ngx-filesaver';
 
-import { untilDestroyed } from 'ngx-take-until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable, Observer } from 'rxjs';
 
 import { FavoritesService } from 'src/app/state/favorite/favorites.service';
 import { SeriesQuery } from 'src/app/state/series/series.query';
 import { SeriesService } from 'src/app/state/series/series.service';
 import { SurveysService } from 'src/app/state/survey/surveys.service';
+
+@UntilDestroy()
 @Component({
   selector: 'app-series-upload',
   templateUrl: './series-upload.component.html'

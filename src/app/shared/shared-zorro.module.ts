@@ -1,3 +1,4 @@
+import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
@@ -13,6 +14,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzListModule } from 'ng-zorro-antd/list';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
@@ -22,19 +24,23 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 export const SHARED_ZORRO_MODULES = [
+  NzAffixModule,
   NzFormModule,
   NzGridModule,
   NzButtonModule,
   NzInputModule,
   NzInputNumberModule,
+  NzListModule,
   NzAlertModule,
   NzProgressModule,
   NzSelectModule,
@@ -43,6 +49,7 @@ export const SHARED_ZORRO_MODULES = [
   NzDropDownModule,
   NzMessageModule,
   NzSpinModule,
+  NzStatisticModule,
   NzPopconfirmModule,
   NzTableModule,
   NzPaginationModule,
@@ -51,6 +58,7 @@ export const SHARED_ZORRO_MODULES = [
   NzModalModule,
   NzTabsModule,
   NzTagModule,
+  NzTimelineModule,
   NzBadgeModule,
   NzToolTipModule,
   NzIconModule,

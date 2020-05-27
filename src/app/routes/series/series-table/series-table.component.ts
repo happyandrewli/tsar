@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-// import { untilDestroyed } from '@ngneat/until-destroy';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { combineLatest, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -20,7 +19,7 @@ import { Survey } from 'src/app/state/survey/survey.model';
 import { SurveysQuery } from 'src/app/state/survey/surveys.query';
 import { SurveysService } from 'src/app/state/survey/surveys.service';
 
-
+@UntilDestroy()
 @Component({
   selector: 'app-series-table',
   templateUrl: './series-table.component.html',
