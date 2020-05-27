@@ -12,7 +12,7 @@ import { SHARED_ZORRO_MODULES } from './shared-zorro.module';
 
 // #region third libs
 
-const THIRDMODULES = [ ];
+const THIRDMODULES = [];
 
 // #endregion
 

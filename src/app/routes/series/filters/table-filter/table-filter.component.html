@@ -1,0 +1,27 @@
+<button
+  class="table-filter-margin"
+  nz-button
+  nz-popover
+  [nzPopoverContent]="tableTemplate"
+  nzPopoverTrigger="click"
+  [nzGhost]="tableButtonStyle == 'selected' ? true : false"
+  [nzType]="tableButtonStyle == 'selected' ? 'primary' : 'default'"
+  nzPopoverPlacement="bottomLeft"
+  [(nzVisible)]="visible"
+  (nzVisibleChange)="close()"
+>
+  {{ tableButtonText }}
+</button>
+
+<ng-template #tableTemplate>
+  <nz-checkbox-wrapper style="width: 260px;">
+    <div nz-row>
+      <div nz-col nzSpan="24" *ngFor="let table of tables">
+        <label nz-checkbox nzValue="table.value" [(ngModel)]="table.checked">{{ table.label }}</label>
+      </div>
+    </div>
+  </nz-checkbox-wrapper>
+  <nz-divider></nz-divider>
+  <button nz-button nzType="link" (click)="clear()">Clear</button>
+  <button nz-button nzType="primary" (click)="save()">Save</button>
+</ng-template>

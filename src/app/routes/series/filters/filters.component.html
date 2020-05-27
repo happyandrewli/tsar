@@ -1,0 +1,46 @@
+<form [formGroup]="filters">
+  <div nz-row nzType="flex" nzJustify="start">
+    <!-- <series-name-filter formControlName="seriesNames"></series-name-filter> -->
+    <!-- <naics-filter formControlName="naics"></naics-filter> -->
+    <div nz-col>
+      <app-table-filter formControlName="tables"></app-table-filter>
+    </div>
+    <div nz-col>
+      <app-item-type-filter formControlName="itemTypes"></app-item-type-filter>
+    </div>
+    <div nz-col>
+      <nz-radio-group class="filter-btn-margin" formControlName="view">
+        <label *ngFor="let view of views" nz-radio-button [nzValue]="view">{{ view }}</label>
+      </nz-radio-group>
+    </div>
+    <div nz-col>
+      <nz-input-group style="margin-left: 8px;" nzCompact>
+        <nz-select [formControl]="from" style="width: 120px;">
+          <nz-option
+            *ngFor="let statP of statPeriods$ | async"
+            [nzLabel]="statP.slice(3)"
+            [nzValue]="statP"
+            [nzDisabled]="disabledStartDate(statP)"
+          >
+          </nz-option>
+        </nz-select>
+        <input
+          type="text"
+          disabled
+          nz-input
+          placeholder="~"
+          style="width: 35px; pointer-events: none; background-color: rgb(255, 255, 255);"
+        />
+        <nz-select [formControl]="to" style="width: 120px;">
+          <nz-option
+            *ngFor="let statP of statPeriods$ | async"
+            [nzLabel]="statP.slice(3)"
+            [nzValue]="statP"
+            [nzDisabled]="disabledEndDate(statP)"
+          >
+          </nz-option>
+        </nz-select>
+      </nz-input-group>
+    </div>
+  </div>
+</form>

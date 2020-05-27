@@ -1,0 +1,357 @@
+<!-- <full-content style="height: fit-content; overflow: visibility;"> -->
+<nz-card>
+  <div nz-row class="mb-md">
+    <div nz-col nzSpan="12">
+      <app-series-filters></app-series-filters>
+    </div>
+    <div nz-col nzSpan="12">
+      <div class="text-right">
+        <nz-radio-group [(ngModel)]="isExpanded" style="margin-right: 5px;">
+          <label nz-radio-button nzValue="C"><i nz-icon [nzType]="'menu'"></i> Collapsed View</label>
+          <label nz-radio-button nzValue="E"><i nz-icon [nzType]="'appstore'"></i> Expanded View</label>
+        </nz-radio-group>
+
+        <button nz-button nz-dropdown [nzDropdownMenu]="exportMenu">
+          <span>Export</span>
+          <i nz-icon nzType="down"></i>
+        </button>
+        <nz-dropdown-menu #exportMenu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="download('csv')"><i nz-icon nzType="file-text" nzTheme="outline"></i>CSV</li>
+            <li nz-menu-item><i nz-icon nzType="file-excel" nzTheme="outline" disabled></i>Excel</li>
+            <li nz-menu-item><i nz-icon nzType="file-pdf" nzTheme="outline" disabled></i>PDF</li>
+          </ul>
+        </nz-dropdown-menu>
+        <!-- full-toggle  -->
+        <button nz-button [nzType]="'default'" (click)="toggleFullscreen()">
+          <i nz-icon [nzType]="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"></i>
+        </button>
+        <button nz-button nzType="link" (click)="toggleAdvSearch()">
+          {{ showAdvSearch ? 'Collapse' : 'Expand' }}<i nz-icon [nzType]="showAdvSearch ? 'up' : 'down'"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-series-upload [hidden]="!showAdvSearch"></app-series-upload>
+  <nz-divider nzDashed style="margin: 8px 0;"></nz-divider>
+
+  <div>
+    <span nz-typography>{{ count$ | async }} Results </span>
+    <span nz-typography nzType="warning">Matching Criteria</span>
+  </div>
+  <nz-table
+    #seriesTable
+    [nzData]="seriesList$ | async"
+    [nzPageIndex]="pageNumber$ | async"
+    [nzPageSize]="pageSize$ | async"
+    (nzPageIndexChange)="updatePageNumber($event)"
+    [nzLoading]="isLoading$ | async"
+    (nzPageSizeChange)="updatePageSize($event)"
+    [nzTotal]="count$ | async"
+    nzSize="small"
+    id="seriesTable"
+    [nzFrontPagination]="false"
+    style="margin-top: 5px;"
+    nzShowSizeChanger
+    (contextmenu)="contextMenu($event, menu)"
+    [nzScroll]="{ x: '1100px' }"
+  >
+    <thead>
+      <tr>
+        <th nzLeft></th>
+        <th nzLeft>Series <button nz-button nzSize="small" nzType="dashed" (click)="upsert()">Add A New Series</button></th>
+        <th nzLeft>Naics Code / Topic / Subtopic</th>
+        <th nzLeft>Table</th>
+        <ng-container *ngFor="let statP of valHeaders$ | async">
+          <th *ngIf="statP >= (from$ | async) && statP <= (to$ | async)">{{ statP.slice(3) }}</th>
+        </ng-container>
+        <th nzRight>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-series [ngForOf]="seriesTable.data">
+        <tr>
+          <td nzLeft nzShowCheckbox [(nzChecked)]="mapOfCheckedId[series.id]"></td>
+          <td nzLeft>
+            <nz-tag *ngIf="series.item_type == 'CV'" [nzColor]="'geekblue'"> {{ series.item_type }}</nz-tag>
+            <nz-tag *ngIf="series.item_type == 'EST'" [nzColor]="'orange'"> {{ series.item_type }}</nz-tag>
+            <nz-tag *ngIf="series.item_type == 'IMP'" [nzColor]="'green'"> {{ series.item_type }}</nz-tag>
+            <nz-tag *ngIf="series.item_type == 'SE'" [nzColor]="'purple'"> {{ series.item_type }}</nz-tag>
+            <nz-tag *ngIf="series.item_type == 'YY'" [nzColor]="'cyan'"> {{ series.item_type }}</nz-tag>
+            <nz-tag *ngIf="series.item_type == 'REV'" [nzColor]="'gold'"> {{ series.item_type }}</nz-tag>
+            <nz-badge [nzDot]="isNewlyUpdatedSeries(series.last_updated)">
+              <span [innerHTML]="series.name | highlight: (localSearchTerm$ | async)"></span>
+            </nz-badge>
+          </td>
+          <td nzLeft>
+            <code [innerHTML]="series.naics | highlight: (localSearchTerm$ | async)"></code>
+            <span [innerHTML]="series.topic | highlight: (localSearchTerm$ | async)"></span> /
+            <span>
+              {{ series.subtopic }}
+            </span>
+          </td>
+          <td nzLeft>
+            <span [innerHTML]="series.tbl | highlight: (localSearchTerm$ | async)"></span>
+          </td>
+          <ng-container *ngFor="let statP of valHeaders$ | async">
+            <td *ngIf="statP >= (from$ | async) && statP <= (to$ | async)">{{ series[statP] }}</td>
+          </ng-container>
+
+          <td nzRight>
+            <a (click)="upsert(series)">
+              <i nz-icon nzType="edit"></i>
+              <span class="pl-sm">Edit</span>
+            </a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a nz-popconfirm nzPopconfirmTitle="Are you sure?" (nzOnConfirm)="deleteSeries(series)" nzIcon="star" nzOkType="danger">
+              <i nz-icon nzType="delete"></i>
+              <span class="pl-sm">Delete</span>
+            </a>
+          </td>
+        </tr>
+        <tr [nzExpand]="isExpanded == 'E' ? true : false">
+          <td colspan="9">
+            <!-- <div nz-text><strong>Topic: </strong>{{series.topic}}</div> -->
+            <!-- <div nz-text><strong>Table: </strong>{{series.tbl}}</div> -->
+            <div nz-text><strong>Flag: </strong>{{ series.flag }}</div>
+            <!-- <div nz-text><strong>Naics: </strong>{{series.naics}}</div> -->
+            <div nz-text><strong>Form: </strong>{{ series.form }}</div>
+            <div nz-text><strong>Item: </strong>{{ series.item }}</div>
+            <span nz-text><strong>Data Type: </strong>{{ series.data_type }}</span>
+            <span> | </span>
+            <span nz-text><strong>View: </strong>{{ series.view }}</span>
+            <span> | </span>
+            <span nz-text><strong>Last Updated: </strong>{{ series.last_updated }}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </nz-table>
+</nz-card>
+<!-- </full-content> -->
+<nz-drawer
+  [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzMaskClosable]="false"
+  [nzWidth]="720"
+  [nzVisible]="isVisible"
+  nzTitle="Add/Edit Series"
+>
+  <form nz-form [formGroup]="seriesForm">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="name">
+            <span
+              >Name
+              <i
+                nz-icon
+                nz-tooltip
+                nzTitle="TSAR series name and flag are basic variables. Additional advanced variables help users perform queries and retrieve series faster."
+                nzType="question-circle"
+                nzTheme="outline"
+              ></i
+            ></span>
+          </nz-form-label>
+          <nz-form-control nzErrorTip="Series name field cannot be blank!">
+            <input maxLength="32" nz-input formControlName="name" id="name" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="flag">Flag</nz-form-label>
+          <nz-form-control nzErrorTip="Series flag field is required and can only be one character!">
+            <input maxlength="1" nz-input formControlName="flag" id="flag" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="naics">NAICS</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="naics" id="naics" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="item">Item</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="item" id="item" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="topic">Topic</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="topic" id="topic" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="subtopic">Subtopic</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="subtopic" id="subtopic" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="item_type">Item Type</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="item_type" id="item_type" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="data_type">Data Type</nz-form-label>
+          <nz-form-control nzErrorTip="Series data type field should only be one character.">
+            <input maxlength="1" nz-input formControlName="data_type" id="data_type" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="form">Form</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="form" id="form" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="tbl">Table</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="tbl" id="tbl" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="view">View</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="view" id="view" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12" *ngIf="crudMode == 'EDIT'">
+        <nz-form-item>
+          <nz-form-label>Last Updated</nz-form-label>
+          <nz-form-control>
+            {{ seriesForm.get('last_updated').value }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <ng-container *ngIf="crudMode == 'EDIT'">
+      <div nz-col nzSpan="24">
+        <g2-bar height="108" [title]="'values'" [data]="editSeriesValues"> </g2-bar>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="crudMode == 'ADD'">
+      <div>
+        <nz-form-item *ngFor="let statP of valHeaders$ | async">
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired [nzFor]="statP">{{ statP }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Value field cannot be blank!">
+            <input nz-input [formControlName]="statP" [id]="statP" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+  </form>
+  <div class="footer">
+    <button nz-button nzType="default" (click)="handleCancel($event)">Cancel</button>
+    <button nz-button nzType="primary" (click)="submitSeriesForm(seriesForm.value)" [disabled]="seriesForm.invalid || seriesForm.pristine">
+      Save
+    </button>
+  </div>
+</nz-drawer>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-submenu nzTitle="Edit Field">
+      <ul>
+        <li nz-menu-item (click)="openEditTopicDrawer()">Topic</li>
+        <li nz-menu-item (click)="openEditTblDrawer()">Table</li>
+      </ul>
+    </li>
+  </ul>
+</nz-dropdown-menu>
+<nz-drawer [nzVisible]="editTblVisible" nzPlacement="right" nzTitle="Edit Table Field" [nzWidth]="320">
+  <nz-alert
+    nzType="info"
+    nzMessage="Informational Notes"
+    nzDescription="Please enter a new table name for the series that you have selected in the data table. Here is how to update a field of multiple series at once."
+    nzShowIcon
+  >
+  </nz-alert>
+  <form nz-form [formGroup]="validateEditTblForm">
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired>Table</nz-form-label>
+          <nz-form-control>
+            <input
+              nz-input
+              formControlName="tbl"
+              nzErrorTip="Please enter a new table name."
+              placeholder="Please enter a new table name for the selected series"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <div class="footer">
+    <button type="button" (click)="closeEditTblDrawer()" class="ant-btn" style="margin-right: 8px;"><span>Cancel</span></button>
+    <button type="button" (click)="submitEditTblForm()" class="ant-btn ant-btn-primary" [disabled]="validateEditTblForm.invalid">
+      <span>Save</span>
+    </button>
+  </div>
+</nz-drawer>
+
+<nz-drawer [nzVisible]="editTopicVisible" nzPlacement="right" nzTitle="Edit Topic Field" [nzWidth]="320">
+  <nz-alert
+    nzType="info"
+    nzMessage="Informational Notes"
+    nzDescription="Please enter a new topic name for the series that you have selected in the data table. Here is how to update a field of multiple series at once."
+    nzShowIcon
+  >
+  </nz-alert>
+  <form nz-form [formGroup]="validateEditTopicForm">
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired>Topic</nz-form-label>
+          <nz-form-control>
+            <input
+              nz-input
+              formControlName="topic"
+              nzErrorTip="Please enter a new topic name."
+              placeholder="Please enter a new topic name for the selected series"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <div class="footer">
+    <button type="button" (click)="closeEditTopicDrawer()" class="ant-btn" style="margin-right: 8px;"><span>Cancel</span></button>
+    <button type="button" (click)="submitEditTopicForm()" class="ant-btn ant-btn-primary" [disabled]="validateEditTopicForm.invalid">
+      <span>Save</span>
+    </button>
+  </div>
+</nz-drawer>

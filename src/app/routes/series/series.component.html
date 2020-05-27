@@ -1,0 +1,37 @@
+<page-header [content]="headerContent" [tab]="tab" [title]="''" [extra]="extra">
+  <ng-template #headerContent>
+    <div>
+      <h1>
+        Time Series Analytic Repository
+        <nz-button-group>
+          <button nz-button nzType="primary" nzGhost>{{ (activeSurvey$ | async)?.title }}</button>
+          <button nz-button nzType="primary" nzGhost nz-dropdown [nzDropdownMenu]="menu1" nzPlacement="bottomRight">
+            <i nz-icon nzType="snippets"></i>
+          </button>
+          <nz-dropdown-menu #menu1="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item *ngFor="let survey of surveys$ | async" (click)="setActiveSurvey(survey.id)">
+                <i nz-icon nzType="sketch"></i>
+                {{ survey.title }}
+              </li>
+            </ul>
+          </nz-dropdown-menu>
+        </nz-button-group>
+      </h1>
+      <!-- <div>The Time Series Analytic Repository (TSAR) is an integrated system of software and data for the storage and
+        manipulation of economic time series. Economic time series are vectors of data values where each data value
+        represents the level of some economic activity for a specified time period. This system is designed to create,
+        save, access, manipulate, and display economic time series. The systems integrated tools are available in an
+        interactive graphical user interface computing environment.</div> -->
+    </div>
+  </ng-template>
+  <ng-template #extra>
+    <app-favorites-page></app-favorites-page>
+  </ng-template>
+  <ng-template #tab>
+    <nz-tabset [nzSelectedIndex]="pos">
+      <nz-tab *ngFor="let i of tabs" [nzTitle]="i.tab" (nzClick)="to(i)"></nz-tab>
+    </nz-tabset>
+  </ng-template>
+</page-header>
+<router-outlet></router-outlet>

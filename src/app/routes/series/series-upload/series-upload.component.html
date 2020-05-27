@@ -1,0 +1,69 @@
+<nz-spin nzTip="Uploading..." [nzSpinning]="uploading">
+  <div nz-row nzType="flex" nzJustify="start">
+    <div nz-col>
+      <nz-upload
+        nzAction="https://jsonplaceholder.typicode.com/posts/"
+        [nzCustomRequest]="customReq"
+        nzListType="picture-card"
+        [nzShowUploadList]="false"
+      >
+        <i nz-icon nzType="plus"></i>
+        <div class="upload-text">Upload</div>
+      </nz-upload>
+    </div>
+    <div nz-col style="flex: 1;">
+      <nz-input-group nzSearch [nzAddOnAfter]="addOnAfterTemplate" style="width: 100%;">
+        <textarea
+          nz-input
+          [formControl]="uploadedSeriesControl"
+          placeholder="Search"
+          style="height: 104px; resize: none;"
+          placeholder="Enter comma-delimited series names here, ex. UYC91ZGY8JV, HTV63QXT9DH"
+        ></textarea>
+      </nz-input-group>
+      <ng-template #addOnAfterTemplate>
+        <button
+          nz-button
+          nzType="primary"
+          nzGhost
+          nzShape="circle"
+          (click)="search()"
+          nz-tooltip
+          nzTooltipTitle="Click to search these series."
+        >
+          <i nz-icon nzType="search"></i>
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button
+          nz-button
+          nzType="default"
+          nzShape="circle"
+          (click)="download()"
+          nz-tooltip
+          nzTooltipTitle="Click to download a list of series names in comma-delimited format."
+        >
+          <i nz-icon nzType="download"></i>
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button
+          nz-button
+          nzType="default"
+          nzShape="circle"
+          (click)="addToFavorites()"
+          nz-tooltip
+          nzTooltipTitle="Click to save the currently searched series names to your favorites."
+        >
+          <i nz-icon nzType="save"></i>
+        </button>
+        <nz-modal
+          [(nzVisible)]="confirmAddToFavorites"
+          nzTitle="How would you like to call this list?"
+          (nzOnOk)="addToFavoritesOK()"
+          (nzOnCancel)="addToFavoritesCancel()"
+        >
+          <input type="text" nz-input placeholder="Enter list name here" [(ngModel)]="listName" />
+        </nz-modal>
+      </ng-template>
+    </div>
+  </div>
+</nz-spin>

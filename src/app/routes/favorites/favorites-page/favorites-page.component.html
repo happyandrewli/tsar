@@ -1,0 +1,28 @@
+<button nz-button class="fav-btn-margin" (click)="showModal()">
+  <i nz-icon nzType="heart" [nzTheme]="'fill'" style="color: hotpink;"></i><b>{{ count$ | async }}</b
+  >&nbsp;Saved Series
+  <i nz-icon nzType="caret-down"></i>
+</button>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Your Favorite Lists of Series" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <nz-table #favoritesTable [nzData]="lists$ | async">
+    <thead>
+      <tr>
+        <th>Saved List</th>
+        <th>Series Names</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let list of favoritesTable.data">
+        <td>{{ list.name }}</td>
+        <td>{{ list.seriesNames }}</td>
+        <td>
+          <a>Edit</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a>Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-modal>
