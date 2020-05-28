@@ -152,8 +152,6 @@ export class SeriesService {
     if (dfParams) {
       params = params.append('filter', dfParams);
     }
-    console.log(dfParams);
-
     params = params.append('fields', 'tbl');
     params = params.append('group', 'tbl');
     params = params.append('include_count', 'true');

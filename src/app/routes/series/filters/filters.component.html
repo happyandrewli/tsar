@@ -24,13 +24,7 @@
           >
           </nz-option>
         </nz-select>
-        <input
-          type="text"
-          disabled
-          nz-input
-          placeholder="~"
-          style="width: 35px; pointer-events: none; background-color: rgb(255, 255, 255);"
-        />
+        <input type="text" disabled nz-input placeholder="~" style="width: 35px; pointer-events: none;" />
         <nz-select [formControl]="to" style="width: 120px;">
           <nz-option
             *ngFor="let statP of statPeriods$ | async"

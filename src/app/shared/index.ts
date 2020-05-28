@@ -1,8 +1,7 @@
 // Components
 
 // Utils
-export * from './utils/yuan';
+// export * from './utils/[component name]';
 
 // Module
 export * from './shared.module';
-export * from './json-schema/json-schema.module';
