@@ -14,12 +14,9 @@ import {
 import { NavigationCancel, NavigationEnd, NavigationError, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { updateHostClass } from '@delon/util';
-import { environment } from '@env/environment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-import { SettingDrawerComponent } from './setting-drawer/setting-drawer.component';
 
 @Component({
   selector: 'layout-default',
@@ -48,7 +45,7 @@ export class LayoutDefaultComponent implements OnInit, AfterViewInit, OnDestroy 
       if (evt instanceof NavigationError || evt instanceof NavigationCancel) {
         this.isFetching = false;
         if (evt instanceof NavigationError) {
-          msgSrv.error(`无法加载${evt.url}路由`, { nzDuration: 1000 * 3 });
+          msgSrv.error(`Unable to go to ${evt.url} route.`, { nzDuration: 1000 * 3 });
         }
         return;
       }
@@ -75,15 +72,7 @@ export class LayoutDefaultComponent implements OnInit, AfterViewInit, OnDestroy 
     doc.body.classList[layout.colorWeak ? 'add' : 'remove']('color-weak');
   }
 
-  ngAfterViewInit(): void {
-    // Setting componet for only developer
-    if (true) {
-      setTimeout(() => {
-        const settingFactory = this.resolver.resolveComponentFactory(SettingDrawerComponent);
-        this.settingHost.createComponent(settingFactory);
-      }, 22);
-    }
-  }
+  ngAfterViewInit(): void { }
 
   ngOnInit() {
     const { settings, unsubscribe$ } = this;

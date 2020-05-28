@@ -6,7 +6,7 @@ import { _HttpClient } from '@delon/theme';
   template: `
     <div class="pt-lg">
       <nz-card>
-        <button *ngFor="let t of types" (click)="go(t)" nz-button nzType="danger">触发{{ t }}</button>
+        <button *ngFor="let t of types" (click)="go(t)" nz-button nzType="danger">trigger{{ t }}</button>
       </nz-card>
     </div>
   `,
@@ -14,7 +14,7 @@ import { _HttpClient } from '@delon/theme';
 export class ExceptionTriggerComponent {
   types = [401, 403, 404, 500];
 
-  constructor(private http: _HttpClient) {}
+  constructor(private http: _HttpClient) { }
 
   go(type: number) {
     this.http.get(`/api/${type}`).subscribe();

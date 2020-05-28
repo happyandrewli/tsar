@@ -1,6 +1,5 @@
 import { Inject, Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
-import { ACLService } from '@delon/acl';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { MenuService, SettingsService, TitleService } from '@delon/theme';
 import { NzIconService } from 'ng-zorro-antd/icon';
@@ -20,7 +19,6 @@ export class StartupService {
     iconSrv: NzIconService,
     private menuService: MenuService,
     private settingService: SettingsService,
-    private aclService: ACLService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private surveysService: SurveysService,
     private seriesService: SeriesService,
@@ -35,6 +33,7 @@ export class StartupService {
     // https://github.com/angular/angular/issues/15088
     return new Promise((resolve) => {
       const tokenData = this.tokenService.get();
+      console.log(tokenData.token);
       if (!tokenData.token) {
         this.injector.get(Router).navigateByUrl('/passport/login');
         resolve({});
@@ -60,9 +59,6 @@ export class StartupService {
           name: tokenData.name,
           email: tokenData.email
         });
-        // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
-        this.aclService.setFull(true);
-        // Menu data, https://ng-alain.com/theme/menu
 
         this.menuService.add([
           {

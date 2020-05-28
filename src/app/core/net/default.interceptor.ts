@@ -9,29 +9,29 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 const CODEMESSAGE = {
-  200: '服务器成功返回请求的数据。',
-  201: '新建或修改数据成功。',
-  202: '一个请求已经进入后台排队（异步任务）。',
-  204: '删除数据成功。',
-  400: '发出的请求有错误，服务器没有进行新建或修改数据的操作。',
-  401: '用户没有权限（令牌、用户名、密码错误）。',
-  403: '用户得到授权，但是访问是被禁止的。',
-  404: '发出的请求针对的是不存在的记录，服务器没有进行操作。',
-  406: '请求的格式不可得。',
-  410: '请求的资源被永久删除，且不会再得到的。',
-  422: '当创建一个对象时，发生一个验证错误。',
-  500: '服务器发生错误，请检查服务器。',
-  502: '网关错误。',
-  503: '服务不可用，服务器暂时过载或维护。',
-  504: '网关超时。',
+  200: 'Standard response for successful HTTP requests.',
+  201: 'The request has been fulfilled, resulting in the creation of a new resource.',
+  202: 'The request has been accepted for processing, but the processing has not been completed.',
+  204: 'The server successfully processed the request and is not returning any content.',
+  400: 'The server cannot or will not process the request due to an apparent client error.',
+  401: 'Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.',
+  403: 'The request contained valid data and was understood by the server, but the server is refusing action.',
+  404: 'The requested resource could not be found but may be available in the future.',
+  406: 'The requested resource is capable of generating only content not acceptable according to the Accept headers sent in the request.',
+  410: 'Indicates that the resource requested is no longer available and will not be available again.',
+  422: 'The request was well-formed but was unable to be followed due to semantic errors.',
+  500: 'Internal Server Error: A generic error message.',
+  502: 'Bad Gateway: The server was acting as a gateway or proxy and received an invalid response from the upstream server.',
+  503: 'Service Unavailable: The server cannot handle the request.',
+  504: 'Gateway Timeout: The server was acting as a gateway or proxy and did not receive a timely response from the upstream server.'
 };
 
 /**
- * 默认HTTP拦截器，其注册细节见 `app.module.ts`
+ * default http interceptor registered in `app.module.ts`
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) { }
 
   private get notification(): NzNotificationService {
     return this.injector.get(NzNotificationService);
@@ -47,41 +47,20 @@ export class DefaultInterceptor implements HttpInterceptor {
     }
 
     const errortext = CODEMESSAGE[ev.status] || ev.statusText;
-    this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, errortext);
+    this.notification.error(`Request error ${ev.status}: ${ev.url}`, errortext);
   }
 
   private handleData(ev: HttpResponseBase): Observable<any> {
-    // 可能会因为 `throw` 导出无法执行 `_HttpClient` 的 `end()` 操作
     if (ev.status > 0) {
       this.injector.get(_HttpClient).end();
     }
     this.checkStatus(ev);
-    // 业务处理：一些通用操作
     switch (ev.status) {
       case 200:
-        // 业务层级错误处理，以下是假定restful有一套统一输出格式（指不管成功与否都有相应的数据格式）情况下进行处理
-        // 例如响应内容：
-        //  错误内容：{ status: 1, msg: '非法参数' }
-        //  正确内容：{ status: 0, response: {  } }
-        // 则以下代码片断可直接适用
-        // if (event instanceof HttpResponse) {
-        //     const body: any = event.body;
-        //     if (body && body.status !== 0) {
-        //         this.msg.error(body.msg);
-        //         // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
-        //         // this.http.get('/').subscribe() 并不会触发
-        //         return throwError({});
-        //     } else {
-        //         // 重新修改 `body` 内容为 `response` 内容，对于绝大多数场景已经无须再关心业务状态码
-        //         return of(new HttpResponse(Object.assign(event, { body: body.response })));
-        //         // 或者依然保持完整的格式
-        //         return of(event);
-        //     }
-        // }
+        // To-do: business logic layer error processing
         break;
       case 401:
-        this.notification.error(`未登录或登录已过期，请重新登录。`, ``);
-        // 清空 token 信息
+        this.notification.error(`Login expired or hasn't logged in yet. Please log in again.`, ``);
         (this.injector.get(DA_SERVICE_TOKEN) as ITokenService).clear();
         this.goTo('/passport/login');
         break;
@@ -92,7 +71,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         break;
       default:
         if (ev instanceof HttpErrorResponse) {
-          console.warn('未可知错误，大部分是由于后端不支持CORS或无效配置引起', ev);
+          console.warn('unknown issue，most likely it is caused by backend not supporting CORS.', ev);
         }
         break;
     }
@@ -104,7 +83,7 @@ export class DefaultInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // 统一加上服务端前缀
+    // Add server prefix
     let url = req.url;
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
       url = environment.SERVER_URL + url;
@@ -113,11 +92,11 @@ export class DefaultInterceptor implements HttpInterceptor {
     const newReq = req.clone({ url });
     return next.handle(newReq).pipe(
       mergeMap((event: any) => {
-        // 允许统一对请求错误处理
+        // Process the request errors all together
         if (event instanceof HttpResponseBase) {
           return this.handleData(event);
         }
-        // 若一切都正常，则后续操作
+        // If everything is ok, then continue
         return of(event);
       }),
       catchError((err: HttpErrorResponse) => this.handleData(err)),

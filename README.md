@@ -1,44 +1,23 @@
-<p align="center">
-  <a href="https://ng-alain.com">
-    <img width="100" src="https://ng-alain.com/assets/img/logo-color.svg">
-  </a>
-</p>
-
-<h1 align="center">NG-ALAIN</h1>
+<h1 align="center">Time Series Analytic Repository (TSAR)</h1>
 
 <div align="center">
-  Out-of-box UI solution for enterprise applications, Let developers focus on business.
-
-  [![Build Status](https://dev.azure.com/ng-alain/ng-alain/_apis/build/status/ng-alain-CI?branchName=master)](https://dev.azure.com/ng-alain/ng-alain/_build/latest?definitionId=2&branchName=master)
-  [![Dependency Status](https://david-dm.org/ng-alain/ng-alain/status.svg?style=flat-square)](https://david-dm.org/ng-alain/ng-alain)
-  [![GitHub Release Date](https://img.shields.io/github/release-date/ng-alain/ng-alain.svg?style=flat-square)](https://github.com/ng-alain/ng-alain/releases)
-  [![NPM version](https://img.shields.io/npm/v/ng-alain.svg?style=flat-square)](https://www.npmjs.com/package/ng-alain)
-  [![prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://prettier.io/)
-  [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/ng-alain/ng-alain/blob/master/LICENSE)
-  [![Gitter](https://img.shields.io/gitter/room/ng-alain/ng-alain.svg?style=flat-square)](https://gitter.im/ng-alain/ng-alain)
-  [![ng-zorro-vscode](https://img.shields.io/badge/ng--zorro-VSCODE-brightgreen.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)
-  [![ng-alain-vscode](https://img.shields.io/badge/ng--alain-VSCODE-brightgreen.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
-
+  The Time Series Analytic Repository (TSAR) is an integrated system of software and data for the storage and manipulation of economic time series. Economic time series are vectors of data values where each data value represents the level of some economic activity for a specified time period. This system is designed to create, save, access, manipulate, and display economic time series. The systems integrated tools are available in an interactive graphical user interface computing environment.
 </div>
 
-English | [简体中文](README-zh_CN.md)
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.3.
 
 ## Quickstart
 
-- [Getting Started](https://ng-alain.com/docs/getting-started)
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Links
+Run `npm run mock:server` to launch a fake REST API locally. Navigate to `http://localhost:3000/series` to see the data. Here are some examples of the different ways to query the data `https://github.com/typicode/json-server`.
 
-+ [Document](https://ng-alain.com) ([Surge Mirror](https://ng-alain-doc.surge.sh))
-+ [@delon Source](https://github.com/ng-alain/delon)
-+ [DEMO](https://ng-alain.surge.sh) ([国内镜像](https://ng-alain.gitee.io/))
+The API is also exposed on the public internet from my GitHub repository: https://my-json-server.typicode.com/happyandrewli/tsar-poc/series.
 
 ## Features
 
 + `ng-zorro-antd` based
 + Responsive Layout
-+ I18n
-+ [@delon](https://github.com/ng-alain/delon)
 + Lazy load Assets
 + UI Router States
 + Customize Theme
@@ -47,35 +26,26 @@ English | [简体中文](README-zh_CN.md)
 + Simple upgrade
 + Support Docker deploy
 
-## Architecture
+## Code scaffolding
 
-![Architecture](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/architecture.png)
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-> [delon](https://github.com/ng-alain/delon) is a production-ready solution for admin business components packages, Built on the design principles developed by Ant Design.
+## Build
 
-## App Shots
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build. ex. ng b --base-href ./ --prod
 
-![desktop](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/desktop.png)
-![ipad](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/ipad.png)
-![iphone](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/iphone.png)
+## Running unit tests
 
-## Donation
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-ng-alain is an MIT-licensed open source project. In order to achieve better and sustainable development of the project, we expect to gain more backers. You can support us in any of the following ways:
+## Running end-to-end tests
 
-- [patreon](https://www.patreon.com/cipchk)
-- [opencollective](https://opencollective.com/ng-alain)
-- [paypal](https://www.paypal.me/cipchk)
-- [支付宝或微信](https://ng-alain.com/assets/donate.png)
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-Or purchasing our [business theme](https://e.ng-alain.com/).
+## Further help
 
-## Backers
-
-Thank you to all our backers! 🙏
-
-<a href="https://opencollective.com/ng-alain#backers" target="_blank"><img src="https://opencollective.com/ng-alain/backers.svg?width=890"></a>
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ### License
 
-The MIT License (see the [LICENSE](https://github.com/ng-alain/ng-alain/blob/master/LICENSE) file for the full text)
+US Census Bureau
