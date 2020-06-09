@@ -21,11 +21,11 @@
       top: 4px;
       flex: 1 1 auto;
       margin-left: 24px;
-      color: @text-color-secondary;
+      // color: @text-color-secondary;
       line-height: 22px;
       .desc-title {
         margin-bottom: 12px;
-        color: @heading-color;
+        // color: @heading-color;
         font-weight: 500;
         font-size: 20px;
         line-height: 28px;
@@ -49,7 +49,6 @@
       }
       & > p {
         margin: 0;
-        color: @heading-color;
         font-size: 30px;
         line-height: 38px;
         & > span {
@@ -78,7 +77,6 @@
     .ant-card-meta-description {
       height: 44px;
       overflow: hidden;
-      color: @text-color-secondary;
       line-height: 22px;
     }
     .card-title {
@@ -87,7 +85,6 @@
         display: inline-block;
         height: 24px;
         margin-left: 12px;
-        color: @heading-color;
         font-size: @font-size-base;
         line-height: 24px;
         vertical-align: top;
@@ -101,7 +98,7 @@
     }
     .survey-grid-selected {
       width: 33.33%;
-      background-color:#fde3cf;
+      color: @primary-color;
     }
     .survey-item {
       display: flex;
@@ -111,19 +108,14 @@
       font-size: 12px;
       line-height: 20px;
       .textOverflow();
-      a {
+      span {
         display: inline-block;
         flex: 1 1 0;
-        color: @text-color-secondary;
         .textOverflow();
-        &:hover {
-          color: @primary-color;
-        }
       }
       .datetime {
         flex: 0 0 auto;
         float: right;
-        color: @disabled-color;
       }
     }
   }

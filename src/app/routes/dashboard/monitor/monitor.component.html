@@ -1,9 +1,9 @@
 <page-header [content]="headerContent" [title]="''" home="">
   <ng-template #headerContent>
     <div class="content">
-      <div class="avatar">
+      <!-- <div class="avatar">
         <nz-avatar [nzText]="(activeSurvey$ | async)?.title" [nzSize]="64"></nz-avatar>
-      </div>
+      </div> -->
       <div class="desc">
         <div class="desc-title">
           TSAR POC Project
@@ -95,29 +95,20 @@
         nz-card-grid
         [ngClass]="survey.id === (activeSurvey$ | async)?.id ? 'survey-grid-selected' : 'survey-grid'"
       >
-        <nz-card
-          [nzBordered]="false"
-          class="ant-card__body-nopadding mb0"
-          (click)="setActive(survey.id)"
-          [ngStyle]="survey.id === (activeSurvey$ | async)?.id ? { 'background-color': '#fde3cf' } : null"
-        >
+        <!-- [ngStyle]="survey.id === (activeSurvey$ | async)?.id ? { 'border-color': '@primary-color' } : null" -->
+        <nz-card [nzBordered]="false" class="ant-card__body-nopadding mb0" (click)="setActive(survey.id)">
           <nz-card-meta [nzTitle]="cardTitle" [nzDescription]="survey.description">
             <ng-template #cardTitle>
-              <div class="card-title">
-                <nz-avatar
-                  [nzText]="survey.type"
-                  [nzSize]="'small'"
-                  [ngStyle]="survey.id === (activeSurvey$ | async)?.id ? { 'background-color': '#f56a00' } : null"
-                >
-                </nz-avatar>
-                <a>{{ survey.title }}</a>
-              </div>
+              <!-- <div class="card-title"> -->
+              <nz-avatar [nzText]="survey.type" [nzSize]="'small'"> </nz-avatar>
+              {{ survey.title }}
+              <!-- </div> -->
             </ng-template>
           </nz-card-meta>
           <div class="survey-item">
-            <a>{{ survey.server }}</a>
+            <span nz-typography nzType="secondary">{{ survey.server }}</span>
             <span class="datetime">
-              over 2 days
+              <span nz-typography nzDisabled>over 2 days</span>
             </span>
           </div>
         </nz-card>

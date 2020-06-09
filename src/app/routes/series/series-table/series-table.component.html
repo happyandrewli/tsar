@@ -84,7 +84,7 @@
             </nz-badge>
           </td>
           <td nzLeft>
-            <code [innerHTML]="series.naics | highlight: (localSearchTerm$ | async)"></code>
+            <span [innerHTML]="series.naics | highlight: (localSearchTerm$ | async)"></span> /
             <span [innerHTML]="series.topic | highlight: (localSearchTerm$ | async)"></span> /
             <span>
               {{ series.subtopic }}
