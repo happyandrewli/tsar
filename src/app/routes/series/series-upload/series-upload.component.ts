@@ -48,6 +48,10 @@ export class SeriesUploadComponent implements OnInit, OnDestroy {
   search() {
     this.seriesService.updateUploadedNames(this.uploadedSeriesControl.value);
   }
+  reset() {
+    this.uploadedSeriesControl.reset();
+    this.search();
+  }
 
   hanldeUploadChange(info: { file: UploadFile }): void {
     switch (info.file.status) {

@@ -28,7 +28,7 @@ export class SeriesService {
       }
 
     }
-    dfParams += this.constructDfParams(keyword, filters);
+    dfParams = this.constructDfParams(keyword, filters, dfParams);
 
     if (dfParams) {
       params = params.append('filter', dfParams);
@@ -74,7 +74,7 @@ export class SeriesService {
       }
     }
 
-    dfParams += this.constructDfParams(keyword, filters);
+    dfParams = this.constructDfParams(keyword, filters, dfParams);
 
     if (dfParams) {
       params = params.append('filter', dfParams);
@@ -101,7 +101,7 @@ export class SeriesService {
     if (keyword) {
       dfParams += '(name contains ' + keyword + ')';
     }
-    dfParams += this.constructDfParams(keyword, filters);
+    dfParams = this.constructDfParams(keyword, filters, dfParams);
     if (dfParams) {
       params = params.append('filter', dfParams);
     }
@@ -125,7 +125,7 @@ export class SeriesService {
       dfParams += '(topic contains ' + keyword + ')';
     }
 
-    dfParams += this.constructDfParams(keyword, filters);
+    dfParams = this.constructDfParams(keyword, filters, dfParams);
     if (dfParams) {
       params = params.append('filter', dfParams);
     }
@@ -148,7 +148,9 @@ export class SeriesService {
     if (keyword) {
       dfParams += '(tbl contains ' + keyword + ')';
     }
-    dfParams += this.constructDfParams(keyword, filters);
+    console.log(dfParams);
+    dfParams = this.constructDfParams(keyword, filters, dfParams);
+    console.log(dfParams);
     if (dfParams) {
       params = params.append('filter', dfParams);
     }
@@ -171,7 +173,7 @@ export class SeriesService {
       dfParams += '(naics contains ' + keyword + ')';
     }
 
-    dfParams += this.constructDfParams(keyword, filters);
+    dfParams = this.constructDfParams(keyword, filters, dfParams);
     if (dfParams) {
       params = params.append('filter', dfParams);
     }
@@ -210,8 +212,7 @@ export class SeriesService {
       .pipe(map(dfResource => dfResource.resource.map(s => s.view)));
   }
 
-  private constructDfParams(keyword: string, filters): string {
-    let dfParams = '';
+  private constructDfParams(keyword: string, filters, dfParams): string {
 
     if (filters.itemTypes && filters.itemTypes.length > 0) {
       if (dfParams) {

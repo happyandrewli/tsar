@@ -77,7 +77,8 @@ export class UserLoginComponent implements OnDestroy {
           lastName: res.last_name,
           host: res.host,
           isSysAdmin: res.is_sys_admin,
-          isRootAdmin: res.is_root_admin
+          isRootAdmin: res.is_root_admin,
+          groupMembership: res.groupMembership
         });
         this.startupSrv.load().then(() => {
           let url = this.tokenService.referrer.url || '/';

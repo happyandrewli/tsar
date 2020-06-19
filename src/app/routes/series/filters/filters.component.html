@@ -1,40 +1,37 @@
 <form [formGroup]="filters">
-  <div nz-row nzType="flex" nzJustify="start">
-    <!-- <series-name-filter formControlName="seriesNames"></series-name-filter> -->
-    <!-- <naics-filter formControlName="naics"></naics-filter> -->
-    <div nz-col>
+  <nz-space>
+    <nz-space-item>
       <app-table-filter formControlName="tables"></app-table-filter>
-    </div>
-    <div nz-col>
+    </nz-space-item>
+    <nz-space-item>
       <app-item-type-filter formControlName="itemTypes"></app-item-type-filter>
-    </div>
-    <div nz-col>
-      <nz-radio-group class="filter-btn-margin" formControlName="view">
+    </nz-space-item>
+    <nz-space-item>
+      <nz-radio-group formControlName="view">
         <label *ngFor="let view of views" nz-radio-button [nzValue]="view">{{ view }}</label>
       </nz-radio-group>
-    </div>
-    <div nz-col>
-      <nz-input-group style="margin-left: 8px;" nzCompact>
-        <nz-select [formControl]="from" style="width: 120px;">
-          <nz-option
-            *ngFor="let statP of statPeriods$ | async"
-            [nzLabel]="statP.slice(3)"
-            [nzValue]="statP"
-            [nzDisabled]="disabledStartDate(statP)"
-          >
-          </nz-option>
-        </nz-select>
-        <input type="text" disabled nz-input placeholder="~" style="width: 35px; pointer-events: none;" />
-        <nz-select [formControl]="to" style="width: 120px;">
-          <nz-option
-            *ngFor="let statP of statPeriods$ | async"
-            [nzLabel]="statP.slice(3)"
-            [nzValue]="statP"
-            [nzDisabled]="disabledEndDate(statP)"
-          >
-          </nz-option>
-        </nz-select>
-      </nz-input-group>
-    </div>
-  </div>
+    </nz-space-item>
+    <nz-space-item>
+      <nz-select [formControl]="from" style="width: 120px;">
+        <nz-option
+          *ngFor="let statP of statPeriods$ | async"
+          [nzLabel]="statP.slice(3)"
+          [nzValue]="statP"
+          [nzDisabled]="disabledStartDate(statP)"
+        >
+        </nz-option>
+      </nz-select>
+    </nz-space-item>
+    <nz-space-item>
+      <nz-select [formControl]="to" style="width: 120px;">
+        <nz-option
+          *ngFor="let statP of statPeriods$ | async"
+          [nzLabel]="statP.slice(3)"
+          [nzValue]="statP"
+          [nzDisabled]="disabledEndDate(statP)"
+        >
+        </nz-option>
+      </nz-select>
+    </nz-space-item>
+  </nz-space>
 </form>

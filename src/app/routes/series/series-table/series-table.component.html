@@ -1,44 +1,68 @@
 <!-- <full-content style="height: fit-content; overflow: visibility;"> -->
 <nz-card>
   <div nz-row class="mb-md">
-    <div nz-col nzSpan="12">
+    <div nz-col nzMd="24" nzLg="20">
       <app-series-filters></app-series-filters>
     </div>
-    <div nz-col nzSpan="12">
+    <div nz-col nzMd="0" nzLg="4">
       <div class="text-right">
-        <nz-radio-group [(ngModel)]="isExpanded" style="margin-right: 5px;">
-          <label nz-radio-button nzValue="C"><i nz-icon [nzType]="'menu'"></i> Collapsed View</label>
-          <label nz-radio-button nzValue="E"><i nz-icon [nzType]="'appstore'"></i> Expanded View</label>
-        </nz-radio-group>
-
-        <button nz-button nz-dropdown [nzDropdownMenu]="exportMenu">
-          <span>Export</span>
-          <i nz-icon nzType="down"></i>
-        </button>
-        <nz-dropdown-menu #exportMenu="nzDropdownMenu">
-          <ul nz-menu>
-            <li nz-menu-item (click)="download('csv')"><i nz-icon nzType="file-text" nzTheme="outline"></i>CSV</li>
-            <li nz-menu-item><i nz-icon nzType="file-excel" nzTheme="outline" disabled></i>Excel</li>
-            <li nz-menu-item><i nz-icon nzType="file-pdf" nzTheme="outline" disabled></i>PDF</li>
-          </ul>
-        </nz-dropdown-menu>
-        <!-- full-toggle  -->
-        <button nz-button [nzType]="'default'" (click)="toggleFullscreen()">
-          <i nz-icon [nzType]="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"></i>
-        </button>
-        <button nz-button nzType="link" (click)="toggleAdvSearch()">
-          {{ showAdvSearch ? 'Collapse' : 'Expand' }}<i nz-icon [nzType]="showAdvSearch ? 'up' : 'down'"></i>
-        </button>
+        <nz-space>
+          <nz-space-item>
+            <!-- full-toggle  -->
+            <button nz-button [nzType]="'default'" (click)="toggleFullscreen()">
+              <i nz-icon [nzType]="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"></i>
+            </button>
+          </nz-space-item>
+          <nz-space-item>
+            <button nz-button nzType="link" (click)="toggleAdvSearch()">
+              {{ showAdvSearch ? 'Collapse' : 'Expand' }}<i nz-icon [nzType]="showAdvSearch ? 'up' : 'down'"></i>
+            </button>
+          </nz-space-item>
+        </nz-space>
       </div>
     </div>
   </div>
   <app-series-upload [hidden]="!showAdvSearch"></app-series-upload>
   <nz-divider nzDashed style="margin: 8px 0;"></nz-divider>
 
-  <div>
-    <span nz-typography>{{ count$ | async }} Results </span>
-    <span nz-typography nzType="warning">Matching Criteria</span>
+  <div nz-row>
+    <div nz-col nzMd="24" nzLg="12">
+      <nz-space>
+        <nz-space-item>
+          <h3 nz-typography>{{ count$ | async }} Results</h3>
+        </nz-space-item>
+        <nz-space-item>
+          <h4 nz-typography nzType="secondary">Matching Criteria</h4>
+        </nz-space-item>
+      </nz-space>
+    </div>
+    <div nz-col nzMd="24" nzLg="12">
+      <div class="text-right">
+        <nz-space>
+          <nz-space-item>
+            <nz-radio-group [(ngModel)]="isExpanded">
+              <label nz-radio-button nzValue="C"><i nz-icon [nzType]="'menu'"></i> Collapsed View</label>
+              <label nz-radio-button nzValue="E"><i nz-icon [nzType]="'appstore'"></i> Expanded View</label>
+            </nz-radio-group>
+          </nz-space-item>
+          <nz-space-item>
+            <button nz-button nz-dropdown [nzDropdownMenu]="exportMenu">
+              <span>Export</span>
+              <i nz-icon nzType="down"></i>
+            </button>
+            <nz-dropdown-menu #exportMenu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item (click)="download('csv')"><i nz-icon nzType="file-text" nzTheme="outline"></i>CSV</li>
+                <li nz-menu-item><i nz-icon nzType="file-excel" nzTheme="outline" disabled></i>Excel</li>
+                <li nz-menu-item><i nz-icon nzType="file-pdf" nzTheme="outline" disabled></i>PDF</li>
+              </ul>
+            </nz-dropdown-menu>
+          </nz-space-item>
+        </nz-space>
+      </div>
+    </div>
   </div>
+
   <nz-table
     #seriesTable
     [nzData]="seriesList$ | async"
@@ -58,21 +82,21 @@
   >
     <thead>
       <tr>
-        <th nzLeft></th>
-        <th nzLeft nzWidth="200px">Series <button nz-button nzSize="small" nzType="dashed" (click)="upsert()">Add A New Series</button></th>
-        <th nzLeft nzWidth="200px">Naics Code / Topic / Subtopic</th>
-        <th nzLeft>Table</th>
+        <th nzLeft nzWidth="50px"></th>
+        <th nzLeft nzWidth="170px">Series <button nz-button nzSize="small" nzType="dashed" (click)="upsert()">Add A New Series</button></th>
+        <th nzLeft nzWidth="230px">Naics Code / Topic / Subtopic</th>
+        <th nzLeft nzWidth="100px">Table</th>
         <ng-container *ngFor="let statP of valHeaders$ | async">
-          <th *ngIf="statP >= (from$ | async) && statP <= (to$ | async)">{{ statP.slice(3) }}</th>
+          <th nzWidth="70px" *ngIf="statP >= (from$ | async) && statP <= (to$ | async)">{{ statP.slice(3) }}</th>
         </ng-container>
-        <th nzRight>Action</th>
+        <th nzRight nzWidth="150px">Action</th>
       </tr>
     </thead>
     <tbody>
       <ng-template ngFor let-series [ngForOf]="seriesTable.data">
         <tr>
           <td nzLeft nzShowCheckbox [(nzChecked)]="mapOfCheckedId[series.id]"></td>
-          <td nzLeft>
+          <td nzLeft nz-typography nzEllipsis>
             <nz-tag *ngIf="series.item_type == 'CV'" [nzColor]="'geekblue'"> {{ series.item_type }}</nz-tag>
             <nz-tag *ngIf="series.item_type == 'EST'" [nzColor]="'orange'"> {{ series.item_type }}</nz-tag>
             <nz-tag *ngIf="series.item_type == 'IMP'" [nzColor]="'green'"> {{ series.item_type }}</nz-tag>
@@ -83,7 +107,7 @@
               <span [innerHTML]="series.name | highlight: (localSearchTerm$ | async)"></span>
             </nz-badge>
           </td>
-          <td nzLeft>
+          <td nzLeft nz-typography nzEllipsis>
             <span [innerHTML]="series.naics | highlight: (localSearchTerm$ | async)"></span> /
             <span [innerHTML]="series.topic | highlight: (localSearchTerm$ | async)"></span> /
             <span>

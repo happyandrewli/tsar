@@ -23,6 +23,7 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
@@ -31,6 +32,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 export const SHARED_ZORRO_MODULES = [
@@ -44,6 +46,7 @@ export const SHARED_ZORRO_MODULES = [
   NzAlertModule,
   NzProgressModule,
   NzSelectModule,
+  NzSpaceModule,
   NzAvatarModule,
   NzCardModule,
   NzDropDownModule,
@@ -67,5 +70,6 @@ export const SHARED_ZORRO_MODULES = [
   NzRadioModule,
   NzCheckboxModule,
   NzAutocompleteModule,
+  NzTypographyModule,
   NzUploadModule
 ];

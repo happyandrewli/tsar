@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { SettingsService } from '@delon/theme';
+import { copy } from '@delon/util';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'header-user',
@@ -17,6 +19,10 @@ import { SettingsService } from '@delon/theme';
     </div>
     <nz-dropdown-menu #userMenu="nzDropdownMenu">
       <div nz-menu class="width-sm">
+        <div nz-menu-item (click)="copySessionToken()">
+          <i nz-icon nzType="copy" class="mr-sm"></i>
+          Copy Session Token
+        </div>
         <div nz-menu-item (click)="logout()">
           <i nz-icon nzType="logout" class="mr-sm"></i>
           Logout
@@ -31,7 +37,13 @@ export class HeaderUserComponent {
     public settings: SettingsService,
     private router: Router,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    private msg: NzMessageService
   ) { }
+
+  copySessionToken() {
+    copy(this.tokenService.get().token);
+    this.msg.success('Copy Session Token success');
+  }
 
   logout() {
     this.tokenService.clear();

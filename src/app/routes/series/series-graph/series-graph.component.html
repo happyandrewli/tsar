@@ -1,24 +1,32 @@
 <nz-card>
   <div nz-row class="mb-md">
-    <div nz-col nzSpan="12">
+    <div nz-col nzMd="24" nzLg="18">
       <app-series-filters></app-series-filters>
     </div>
-    <div nz-col nzSpan="12">
+    <div nz-col nzMd="0" nzLg="6">
       <div class="text-right">
-        <button nz-button nz-dropdown [nzDropdownMenu]="exportMenu">
-          <span>Export</span>
-          <i nz-icon nzType="down"></i>
-        </button>
-        <nz-dropdown-menu #exportMenu="nzDropdownMenu">
-          <ul nz-menu>
-            <li nz-menu-item (click)="downloadGraph('jpg')">JPG</li>
-            <li nz-menu-item>PNG</li>
-          </ul>
-        </nz-dropdown-menu>
-        <button nz-button [nzType]="'default'"><i nz-icon nzType="fullscreen"></i></button>
-        <button nz-button nzType="link" (click)="toggleAdvSearch()">
-          {{ showAdvSearch ? 'Collapse' : 'Expand' }}<i nz-icon [nzType]="showAdvSearch ? 'up' : 'down'"></i>
-        </button>
+        <nz-space>
+          <nz-space-item>
+            <button nz-button nz-dropdown [nzDropdownMenu]="exportMenu">
+              <span>Export</span>
+              <i nz-icon nzType="down"></i>
+            </button>
+            <nz-dropdown-menu #exportMenu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item (click)="downloadGraph('jpg')">JPG</li>
+                <li nz-menu-item>PNG</li>
+              </ul>
+            </nz-dropdown-menu>
+          </nz-space-item>
+          <nz-space-item>
+            <button nz-button [nzType]="'default'"><i nz-icon nzType="fullscreen"></i></button>
+          </nz-space-item>
+          <nz-space-item>
+            <button nz-button nzType="link" (click)="toggleAdvSearch()">
+              {{ showAdvSearch ? 'Collapse' : 'Expand' }}<i nz-icon [nzType]="showAdvSearch ? 'up' : 'down'"></i>
+            </button>
+          </nz-space-item>
+        </nz-space>
       </div>
     </div>
   </div>

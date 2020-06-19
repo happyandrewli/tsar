@@ -21,6 +21,7 @@
           placeholder="Enter comma-delimited series names here, ex. UYC91ZGY8JV, HTV63QXT9DH"
         ></textarea>
       </nz-input-group>
+      <ng-template #textAreaClearTpl> </ng-template>
       <ng-template #addOnAfterTemplate>
         <button
           nz-button
@@ -32,6 +33,10 @@
           nzTooltipTitle="Click to search these series."
         >
           <i nz-icon nzType="search"></i>
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button nzType="default" nzShape="circle" (click)="reset()" nz-tooltip nzTooltipTitle="Click to reset.">
+          <i nz-icon nzType="close"></i>
         </button>
         <nz-divider nzType="vertical"></nz-divider>
         <button
