@@ -27,6 +27,7 @@ const routes: Routes = [
       { path: 'dashboard/monitor', component: DashboardMonitorComponent },
       { path: 'dashboard/analysis', component: DashboardAnalysisComponent },
       { path: 'series', loadChildren: () => import('./series/series.module').then(m => m.SeriesModule) },
+      { path: 'logs', loadChildren: () => import('./logs/logs.module').then(m => m.LogsModule) },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
     ]
   },

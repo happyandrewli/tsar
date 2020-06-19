@@ -90,6 +90,18 @@ export class StartupService {
                   { text: 'Table View', link: '/series/tview' },
                   { text: 'Graph View', link: '/series/gview' }
                 ]
+              },
+              {
+                text: 'System',
+                icon: { type: 'icon', value: 'setting' },
+                children: [
+                  {
+                    text: 'Logs', children: [
+                      { text: 'Operation Logs', link: '/logs/operations' },
+                      { text: 'Change Logs', link: '/logs/changes' }
+                    ]
+                  }
+                ]
               }
             ]
           }

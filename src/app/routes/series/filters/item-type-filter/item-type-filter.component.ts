@@ -12,7 +12,7 @@ import { SurveysService } from 'src/app/state/survey/surveys.service';
 @Component({
   selector: 'app-item-type-filter',
   templateUrl: './item-type-filter.component.html',
-  styleUrls: ['./item-type-filter.component.less'],
+  // styleUrls: ['./item-type-filter.component.less'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

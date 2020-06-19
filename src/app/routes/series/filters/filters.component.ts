@@ -13,7 +13,7 @@ import { SurveysService } from 'src/app/state/survey/surveys.service';
 @Component({
   selector: 'app-series-filters',
   templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.less']
+  // styleUrls: ['./filters.component.less']
 })
 export class FiltersComponent implements OnInit, OnDestroy {
 
