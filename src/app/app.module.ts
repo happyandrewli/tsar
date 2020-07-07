@@ -60,6 +60,7 @@ import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { GlobalConfigModule } from './global-config.module';
 import { LayoutModule } from './layout/layout.module';
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
@@ -72,6 +73,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    GlobalConfigModule.forRoot(),
     CoreModule,
     SharedModule,
     LayoutModule,

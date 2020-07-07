@@ -2,11 +2,10 @@ import { ID } from '@datorama/akita';
 
 export interface OperationLog {
   id: ID;
-  time: string;
-  username: string;
-  table: string;
-  action: string;
-  ipAddress: string;
-  request: string;
-  payload: string;
+  user_name: string;
+  ip: string;
+  timestamp: string;
+  method: string;
+  url: string;
+  // payload: string;
 }

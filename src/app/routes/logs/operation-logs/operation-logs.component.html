@@ -1,28 +1,31 @@
 <nz-card>
-  <nz-table [nzData]="operationLogs$ | async" nzSize="small" #operationLogsTable>
+  <st #operationLogsTable [data]="operationLogs$ | async" [columns]="columns" [expand]="expand" expandRowByClick expandAccordion>
+    <ng-template #expand let-item let-index="index" let-column="column">
+      <p nz-typography nzEllipsis nzExpandable>
+        {{ item.url }}
+      </p>
+    </ng-template>
+  </st>
+  <!-- <nz-table [nzData]="operationLogs$ | async" nzSize="small" #operationLogsTable>
     <thead>
       <tr>
-        <th>Time</th>
-        <th>Username</th>
-        <th>Table</th>
-        <th>Action</th>
+        <th>User Name</th>
         <th>IP Address</th>
-        <th>Request</th>
-        <th>Payload</th>
+        <th>Time</th>
+        <th>Action</th>
+        <th>Request URL</th>
       </tr>
     </thead>
     <tbody>
       <ng-template ngFor let-opLogs [ngForOf]="operationLogsTable.data">
         <tr>
-          <td>{{ opLogs.time }}</td>
-          <td>{{ opLogs.username }}</td>
-          <td>{{ opLogs.table }}</td>
-          <td>{{ opLogs.action }}</td>
-          <td>{{ opLogs.ipAddress }}</td>
-          <td>{{ opLogs.request }}</td>
-          <td>{{ opLogs.payload }}</td>
+          <td>{{ opLogs.user_name }}</td>
+          <td>{{ opLogs.ip }}</td>
+          <td>{{ opLogs.timestamp }}</td>
+          <td>{{ opLogs.method }}</td>
+          <td>{{ opLogs.url }}</td>
         </tr>
       </ng-template>
     </tbody>
-  </nz-table>
+  </nz-table> -->
 </nz-card>

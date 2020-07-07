@@ -37,7 +37,7 @@ export class StartupService {
       const tokenData = this.tokenService.get();
       // console.log(tokenData.token);
       if (!tokenData.token || !tokenData.groupMembership) {
-        console.log(tokenData);
+        // console.log(tokenData);
         this.injector.get(Router).navigateByUrl('/passport/login');
         resolve({});
         return;
@@ -46,11 +46,11 @@ export class StartupService {
       const surveys = [];
       tokenData.groupMembership.forEach(group => {
         if (group === 'cn=SAS17,ou=CTO,ou=Groups,o=U.S. Census Bureau,c=US') {
-          surveys.push({ id: 1, type: 'A', title: 'SAS17', description: 'Service Annual Survey', server: 'Steps 77', selected: true, databaseTable: 'sastsar' });
+          surveys.push({ id: 1, type: 'A', title: 'SAS17', description: 'Service Annual Survey', server: 'Steps 77', selected: true, databaseTable: 'sas17' });
         } else if (group === 'cn=QSS,ou=CTO,ou=Groups,o=U.S. Census Bureau,c=US') {
-          surveys.push({ id: 2, type: 'Q', title: 'QSS', description: 'Quarterly Services Survey', server: 'Steps 77', selected: false, databaseTable: 'qsstsar' });
+          surveys.push({ id: 2, type: 'Q', title: 'QSS', description: 'Quarterly Services Survey', server: 'Steps 77', selected: false, databaseTable: 'qss' });
         } else if (group === 'cn=MWTS,ou=CTO,ou=Groups,o=U.S. Census Bureau,c=US') {
-          surveys.push({ id: 3, type: 'M', title: 'MWTS', description: 'Monthly Wholesale Trade Survey', server: 'Steps 79', selected: false, databaseTable: 'mwtstsar' });
+          surveys.push({ id: 3, type: 'M', title: 'MWTS', description: 'Monthly Wholesale Trade Survey', server: 'Steps 79', selected: false, databaseTable: 'mwts' });
         }
       });
       surveys.push({ id: 4, type: 'A', title: 'SAS-KING', description: 'Beefed up SAS17 with a million fake records', server: 'Steps 78', selected: false, databaseTable: 'tsarpoc' });
