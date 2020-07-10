@@ -7,6 +7,11 @@ import { OperationLogsState, OperationLogsStore } from './operation-logs.store';
   providedIn: 'root'
 })
 export class OperationLogsQuery extends QueryEntity<OperationLogsState, OperationLog> {
+  selectDate$ = this.select('date');
+
+  get date() {
+    return this.getValue().date;
+  }
 
   constructor(protected store: OperationLogsStore) {
     super(store);

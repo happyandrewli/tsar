@@ -35,9 +35,7 @@ export class StartupService {
     // https://github.com/angular/angular/issues/15088
     return new Promise((resolve) => {
       const tokenData = this.tokenService.get();
-      // console.log(tokenData.token);
       if (!tokenData.token || !tokenData.groupMembership) {
-        // console.log(tokenData);
         this.injector.get(Router).navigateByUrl('/passport/login');
         resolve({});
         return;
@@ -57,64 +55,71 @@ export class StartupService {
       this.surveysStore.set(surveys);
       this.surveysStore.setActive(surveys[0].id);
 
-      this.seriesService.getSchema().subscribe(() => {
-        // Application information: including site name, description, year
-        this.settingService.setApp({
-          name: `tsar`,
-          description: `Ng-zorro admin panel front-end framework`
-        });
-        // User information: including name, avatar, email address
-        this.settingService.setUser({
-          avatar: './assets/tmp/img/avatar.jpg',
-          name: tokenData.name,
-          email: tokenData.email
-        });
+      this.seriesService.getSchema()
+        // .pipe(
+        //   catchError((res) => {
+        //     resolve(null);
+        //     return [];
+        //   })
+        // )
+        .subscribe(() => {
+          // Application information: including site name, description, year
+          this.settingService.setApp({
+            name: `tsar`,
+            description: `Ng-zorro admin panel front-end framework`
+          });
+          // User information: including name, avatar, email address
+          this.settingService.setUser({
+            avatar: './assets/tmp/img/avatar.jpg',
+            name: tokenData.name,
+            email: tokenData.email
+          });
 
-        this.menuService.add([
-          {
-            text: 'Main Navigation',
-            group: true,
-            children: [
-              {
-                text: 'Dashboard',
-                icon: 'anticon-dashboard',
-                children: [
-                  { text: 'monitor', link: '/dashboard/monitor' },
-                  { text: 'analysis', link: '/dashboard/analysis' }
-                ]
-              },
-              {
-                text: 'Series',
-                icon: { type: 'icon', value: 'history' },
-                children: [
-                  { text: 'Table View', link: '/series/tview' },
-                  { text: 'Graph View', link: '/series/gview' }
-                ]
-              },
-              {
-                text: 'System',
-                icon: { type: 'icon', value: 'setting' },
-                children: [
-                  {
-                    text: 'Logs', children: [
-                      { text: 'Operation Logs', link: '/logs/operations' },
-                      { text: 'Change Logs', link: '/logs/changes' }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]);
+          this.menuService.add([
+            {
+              text: 'Main Navigation',
+              group: true,
+              children: [
+                {
+                  text: 'Dashboard',
+                  icon: 'anticon-dashboard',
+                  children: [
+                    { text: 'monitor', link: '/dashboard/monitor' },
+                    { text: 'analysis', link: '/dashboard/analysis' }
+                  ]
+                },
+                {
+                  text: 'Series',
+                  icon: { type: 'icon', value: 'history' },
+                  children: [
+                    { text: 'Table View', link: '/series/tview' },
+                    { text: 'Graph View', link: '/series/gview' }
+                  ]
+                },
+                {
+                  text: 'System',
+                  icon: { type: 'icon', value: 'setting' },
+                  children: [
+                    {
+                      text: 'Logs', children: [
+                        { text: 'Operation Logs', link: '/logs/operations' },
+                        { text: 'Change Logs', link: '/logs/changes' }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]);
 
-        // Can be set page suffix title, https://ng-alain.com/theme/title
-        this.titleService.default = '';
-        this.titleService.suffix = 'tsar';
-      },
-        () => { },
-        () => {
-          resolve(null);
-        });
+          // Can be set page suffix title, https://ng-alain.com/theme/title
+          this.titleService.default = '';
+          this.titleService.suffix = 'tsar';
+        },
+          () => { },
+          () => {
+            resolve(null);
+          });
     });
   }
 }

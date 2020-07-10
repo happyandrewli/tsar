@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { STColumn } from '@delon/abc/st/table';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Observable } from 'rxjs';
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
+import { combineLatest, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { OperationLog } from 'src/app/state/logs/operation-logs/operation-log.model';
 import { OperationLogsQuery } from 'src/app/state/logs/operation-logs/operation-logs.query';
 import { OperationLogsService } from 'src/app/state/logs/operation-logs/operation-logs.service';
@@ -16,6 +19,7 @@ export class OperationLogsComponent implements OnInit {
 
   constructor(private operationLogsService: OperationLogsService, private operationLogsQuery: OperationLogsQuery) { }
   operationLogs$: Observable<OperationLog[]>;
+  date = new FormControl();
 
   columns: STColumn[] = [
     {
@@ -41,9 +45,26 @@ export class OperationLogsComponent implements OnInit {
     }
   ];
 
+  today = new Date();
+
   ngOnInit() {
     this.operationLogs$ = this.operationLogsQuery.selectAll();
-    console.log(this.operationLogsQuery.getAll());
-    this.operationLogsService.get().pipe(untilDestroyed(this)).subscribe({ error() { } });
+    this.date.setValue(this.operationLogsQuery.date);
+    combineLatest([this.operationLogsQuery.selectDate$])
+      .pipe(switchMap(([date]) => {
+        return this.operationLogsService.get(date);
+      }), untilDestroyed(this)).subscribe({
+        error() {
+        }
+      });
+    this.date.valueChanges.pipe(
+      untilDestroyed(this)
+    ).subscribe(date => {
+      this.operationLogsService.updateDate(date);
+    });
+  }
+  disabledDate = (current: Date): boolean => {
+    // Can not select days after today
+    return differenceInCalendarDays(current, this.today) > 0;
   }
 }

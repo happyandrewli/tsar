@@ -4,7 +4,7 @@
   <i nz-icon nzType="caret-down"></i>
 </button>
 
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Your Favorite Lists of Series" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<nz-modal [(nzVisible)]="isVisible" nzTooltipTitle="Your Favorite Lists of Series" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <nz-table #favoritesTable [nzData]="lists$ | async">
     <thead>
       <tr>

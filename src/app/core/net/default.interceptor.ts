@@ -45,7 +45,6 @@ export class DefaultInterceptor implements HttpInterceptor {
     if ((ev.status >= 200 && ev.status < 300) || ev.status === 401) {
       return;
     }
-
     const errortext = CODEMESSAGE[ev.status] || ev.statusText;
     this.notification.error(`Request error ${ev.status}: ${ev.url}`, errortext);
   }

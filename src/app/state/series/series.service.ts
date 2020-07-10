@@ -37,9 +37,9 @@ export class SeriesService {
     params = params.append('include_count', 'true');
     params = params.append('limit', pageSize.toString());
     params = params.append('offset', ((pageNumber - 1) * pageSize).toString());
-    params = params.append('api_key', DFAPI_KEY);
-
-    return this.http.get<DfResource>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params }).pipe(
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
+    return this.http.get<DfResource>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params, headers }).pipe(
       tap(series => {
         this.seriesStore.set(series.resource);
         this.updateCount(series.meta.count);
@@ -48,14 +48,17 @@ export class SeriesService {
   }
 
   getSchema() {
-    let params = new HttpParams();
-    params = params.append('api_key', DFAPI_KEY);
-    return this.http.get<any>(`${DFAPI}/_schema/${this.surveysQuery.getActive().databaseTable}`, { params }).pipe(
+    const params = new HttpParams();
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
+    return this.http.get<any>(`${DFAPI}/_schema/${this.surveysQuery.getActive().databaseTable}`, { params, headers }).pipe(
       tap(schema => {
         const statPeriods = schema.field.map(field => field.name).filter(name => name.substring(0, 3) === 'val').sort();
         this.updateValHeaders(statPeriods);
         this.updateFrom(statPeriods[0]);
         this.updateTo(statPeriods[statPeriods.length - 1]);
+      }, error => {
+        console.warn(`StartupService.load: Network request faileddddddddd`, error);
       })
     );
   }
@@ -114,8 +117,9 @@ export class SeriesService {
       params = params.append('limit', '3');
       params = params.append('offset', '0');
     }
-    params = params.append('api_key', DFAPI_KEY);
-    return this.http.get<DfResource>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params });
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
+    return this.http.get<DfResource>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params, headers });
   }
 
   getSeriesTopics(keyword: string, filters, globalSearch?: boolean): Observable<DfResource> {
@@ -138,8 +142,9 @@ export class SeriesService {
       params = params.append('limit', '3');
       params = params.append('offset', '0');
     }
-    params = params.append('api_key', DFAPI_KEY);
-    return this.http.get<DfResource>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params });
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
+    return this.http.get<DfResource>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params, headers });
   }
 
   getSeriesTables(keyword: string, filters, globalSearch?: boolean): Observable<DfResource> {
@@ -148,9 +153,7 @@ export class SeriesService {
     if (keyword) {
       dfParams += '(tbl contains ' + keyword + ')';
     }
-    console.log(dfParams);
     dfParams = this.constructDfParams(keyword, filters, dfParams);
-    console.log(dfParams);
     if (dfParams) {
       params = params.append('filter', dfParams);
     }
@@ -162,8 +165,9 @@ export class SeriesService {
       params = params.append('limit', '3');
       params = params.append('offset', '0');
     }
-    params = params.append('api_key', DFAPI_KEY);
-    return this.http.get<DfResource>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params });
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
+    return this.http.get<DfResource>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params, headers });
   }
 
   getSeriesNaics(keyword: string, filters, globalSearch?: boolean): Observable<DfResource> {
@@ -186,8 +190,9 @@ export class SeriesService {
       params = params.append('limit', '3');
       params = params.append('offset', '0');
     }
-    params = params.append('api_key', DFAPI_KEY);
-    return this.http.get<DfResource>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params });
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
+    return this.http.get<DfResource>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params, headers });
   }
 
   getSeriesItemTypes(): Observable<string[]> {
@@ -195,9 +200,10 @@ export class SeriesService {
     params = params.append('fields', 'item_type');
     params = params.append('group', 'item_type');
     params = params.append('order', 'item_type');
-    params = params.append('api_key', DFAPI_KEY);
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
 
-    return this.http.get<{ resource: [{ item_type: string }] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params })
+    return this.http.get<{ resource: [{ item_type: string }] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params, headers })
       .pipe(map(dfResource => dfResource.resource.map(s => s.item_type)));
   }
 
@@ -206,9 +212,10 @@ export class SeriesService {
     params = params.append('fields', 'view');
     params = params.append('group', 'view');
     params = params.append('order', 'view');
-    params = params.append('api_key', DFAPI_KEY);
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
 
-    return this.http.get<{ resource: [{ view: string }] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params })
+    return this.http.get<{ resource: [{ view: string }] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params, headers })
       .pipe(map(dfResource => dfResource.resource.map(s => s.view)));
   }
 
@@ -250,9 +257,10 @@ export class SeriesService {
   }
 
   upsert(seriesList: Series[]) {
-    let params = new HttpParams();
-    params = params.append('api_key', DFAPI_KEY);
-    return this.http.put<{ resource: any[] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { resource: seriesList }, { params }).pipe(
+    const params = new HttpParams();
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
+    return this.http.put<{ resource: any[] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { resource: seriesList }, { params, headers }).pipe(
       tap(res => {
         this.seriesStore.upsertMany(seriesList);
       })
@@ -262,9 +270,10 @@ export class SeriesService {
   add(series: Series) {
     let params = new HttpParams();
     params = params.append('fields', '*');
-    params = params.append('api_key', DFAPI_KEY);
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
     delete series.id;
-    return this.http.post<{ resource: Series[] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { resource: [series] }, { params });
+    return this.http.post<{ resource: Series[] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { resource: [series] }, { params, headers });
   }
 
   updateTblField(ids: ID[], field: string) {
@@ -276,12 +285,12 @@ export class SeriesService {
         last_updated: d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2) + ' ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2) + ':' + ('0' + d.getSeconds()).slice(-2)
       });
     });
-    let params = new HttpParams();
-    params = params.append('api_key', DFAPI_KEY);
-    return this.http.patch<{ resource: any[] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { resource: patchSeries }, { params }).pipe(
+    const params = new HttpParams();
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
+    return this.http.patch<{ resource: any[] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { resource: patchSeries }, { params, headers }).pipe(
       tap(res => {
         // this.seriesStore.upsert(ids, { tbl: field });
-        // console.log(res.resource);
         this.seriesStore.upsertMany(patchSeries);
       })
     );
@@ -295,12 +304,12 @@ export class SeriesService {
         last_updated: d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2) + ' ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2) + ':' + ('0' + d.getSeconds()).slice(-2)
       });
     });
-    let params = new HttpParams();
-    params = params.append('api_key', DFAPI_KEY);
-    return this.http.patch<{ resource: any[] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { resource: patchSeries }, { params }).pipe(
+    const params = new HttpParams();
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
+    return this.http.patch<{ resource: any[] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { resource: patchSeries }, { params, headers }).pipe(
       tap(res => {
         // this.seriesStore.upsert(ids, { tbl: field });
-        // console.log(res.resource);
         this.seriesStore.upsertMany(patchSeries);
       })
     );
@@ -310,9 +319,10 @@ export class SeriesService {
     // this.seriesStore.remove(series.id);
     let params = new HttpParams();
     params = params.append('ids', series.id.toString());
-    params = params.append('api_key', DFAPI_KEY);
+    // params = params.append('api_key', DFAPI_KEY);
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
 
-    return this.http.delete<{ resource: Series[] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params });
+    return this.http.delete<{ resource: Series[] }>(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`, { params, headers });
   }
 
   updateFilters(filters) {

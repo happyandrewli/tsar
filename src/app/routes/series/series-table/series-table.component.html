@@ -158,7 +158,7 @@
   [nzMaskClosable]="false"
   [nzWidth]="720"
   [nzVisible]="isVisible"
-  nzTitle="Add/Edit Series"
+  nzTooltipTitle="Add/Edit Series"
 >
   <form nz-form [formGroup]="seriesForm">
     <div nz-row nzGutter="8">
@@ -170,7 +170,7 @@
               <i
                 nz-icon
                 nz-tooltip
-                nzTitle="TSAR series name and flag are basic variables. Additional advanced variables help users perform queries and retrieve series faster."
+                nzTooltipTitle="TSAR series name and flag are basic variables. Additional advanced variables help users perform queries and retrieve series faster."
                 nzType="question-circle"
                 nzTheme="outline"
               ></i
@@ -306,7 +306,7 @@
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
-    <li nz-submenu nzTitle="Edit Field">
+    <li nz-submenu nzTooltipTitle="Edit Field">
       <ul>
         <li nz-menu-item (click)="openEditTopicDrawer()">Topic</li>
         <li nz-menu-item (click)="openEditTblDrawer()">Table</li>
@@ -314,7 +314,7 @@
     </li>
   </ul>
 </nz-dropdown-menu>
-<nz-drawer [nzVisible]="editTblVisible" nzPlacement="right" nzTitle="Edit Table Field" [nzWidth]="320">
+<nz-drawer [nzVisible]="editTblVisible" nzPlacement="right" nzTooltipTitle="Edit Table Field" [nzWidth]="320">
   <nz-alert
     nzType="info"
     nzMessage="Informational Notes"
@@ -347,7 +347,7 @@
   </div>
 </nz-drawer>
 
-<nz-drawer [nzVisible]="editTopicVisible" nzPlacement="right" nzTitle="Edit Topic Field" [nzWidth]="320">
+<nz-drawer [nzVisible]="editTopicVisible" nzPlacement="right" nzTooltipTitle="Edit Topic Field" [nzWidth]="320">
   <nz-alert
     nzType="info"
     nzMessage="Informational Notes"

@@ -4,9 +4,9 @@ import { throwIfAlreadyLoaded } from '@core';
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
 
 const alainConfig: AlainConfig = {
-  auth: { token_send_key: 'X-DreamFactory-Session-Tokenn' }
+  auth: { token_send_key: 'X-DreamFactory-Session-Token' }
 };
-const alainProvides = [{ provide: ALAIN_CONFIG, useValue: alainConfig }];
+const alainProvides = [{ provide: ALAIN_CONFIG, useValue: alainConfig, login_url: '/passport/login' }];
 
 @NgModule({
 
