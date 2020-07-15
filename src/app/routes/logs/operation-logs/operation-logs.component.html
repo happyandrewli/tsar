@@ -1,6 +1,7 @@
 <nz-card>
   <div class="my-md">
-    <nz-date-picker [formControl]="date" nzFormat="MM-dd-yyyy" nzAllowClear="false" [nzDisabledDate]="disabledDate"> </nz-date-picker>
+    <!-- <nz-date-picker [formControl]="date" nzFormat="MM-dd-yyyy" nzAllowClear="false" [nzDisabledDate]="disabledDate"> </nz-date-picker> -->
+    <nz-range-picker [formControl]="range" nzFormat="MM-dd-yyyy" nzAllowClear="false" [nzDisabledDate]="disabledDate"> </nz-range-picker>
   </div>
   <st #operationLogsTable [data]="operationLogs$ | async" [columns]="columns" [expand]="expand" expandRowByClick expandAccordion>
     <ng-template #expand let-item let-index="index" let-column="column">

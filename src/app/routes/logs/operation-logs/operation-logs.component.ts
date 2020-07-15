@@ -20,6 +20,7 @@ export class OperationLogsComponent implements OnInit {
   constructor(private operationLogsService: OperationLogsService, private operationLogsQuery: OperationLogsQuery) { }
   operationLogs$: Observable<OperationLog[]>;
   date = new FormControl();
+  range = new FormControl();
 
   columns: STColumn[] = [
     {
@@ -49,7 +50,10 @@ export class OperationLogsComponent implements OnInit {
 
   ngOnInit() {
     this.operationLogs$ = this.operationLogsQuery.selectAll();
+
     this.date.setValue(this.operationLogsQuery.date);
+    this.range.setValue(this.operationLogsQuery.range);
+
     combineLatest([this.operationLogsQuery.selectDate$])
       .pipe(switchMap(([date]) => {
         return this.operationLogsService.get(date);
@@ -61,6 +65,12 @@ export class OperationLogsComponent implements OnInit {
       untilDestroyed(this)
     ).subscribe(date => {
       this.operationLogsService.updateDate(date);
+    });
+
+    this.range.valueChanges.pipe(
+      untilDestroyed(this)
+    ).subscribe(range => {
+      this.operationLogsService.updateRange(range);
     });
   }
   disabledDate = (current: Date): boolean => {

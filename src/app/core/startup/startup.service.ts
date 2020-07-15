@@ -100,12 +100,13 @@ export class StartupService {
                   text: 'System',
                   icon: { type: 'icon', value: 'setting' },
                   children: [
-                    {
-                      text: 'Logs', children: [
-                        { text: 'Operation Logs', link: '/logs/operations' },
-                        { text: 'Change Logs', link: '/logs/changes' }
-                      ]
-                    }
+                    { text: 'Logs', link: '/logs/operations' }
+                    // {
+                    //   text: 'Logs', children: [
+                    //     { text: 'Operation Logs', link: '/logs/operations' },
+                    //     { text: 'Change Logs', link: '/logs/changes' }
+                    //   ]
+                    // }
                   ]
                 }
               ]

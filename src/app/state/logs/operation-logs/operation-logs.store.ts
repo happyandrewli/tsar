@@ -4,6 +4,7 @@ import { OperationLog } from './operation-log.model';
 
 export interface OperationLogsState extends EntityState<OperationLog>, ActiveState {
   date: Date;
+  range: Date[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +12,8 @@ export interface OperationLogsState extends EntityState<OperationLog>, ActiveSta
 export class OperationLogsStore extends EntityStore<OperationLogsState, OperationLog> {
   constructor() {
     super({
-      date: new Date()
+      date: new Date(),
+      range: [new Date(), new Date()]
     });
   }
 }

@@ -5,7 +5,7 @@
     [formControl]="searchControl"
     (focus)="qFocus()"
     (blur)="qBlur($event.target?.value)"
-    placeholder="Search for series name, topic, naics, table ..."
+    placeholder="Search for series, logs..."
     [nzAutocomplete]="auto"
     (keydown.enter)="search($event)"
   />
@@ -16,48 +16,57 @@
 </ng-template>
 
 <nz-autocomplete nzBackfill #auto nzDefaultActiveFirstOption="false">
-  <nz-auto-optgroup [nzLabel]="groupNames" *ngIf="searchControl.value.length >= 3">
-    <ng-template #groupNames>
-      <span>SERIES NAMES</span>
-      <span style="float: right;">{{ filteredSeriesNamesCount }} matches</span>
-    </ng-template>
-    <nz-auto-option *ngFor="let seriesName of filteredSeriesNames" [nzValue]="seriesName.value" [innerHTML]="seriesName.label">
-    </nz-auto-option>
-    <!-- <nz-auto-option>
+  <!-- <nz-auto-option>
       <a *ngIf="filteredSeriesNamesCount >= 3">View All Series Name Matches ></a>
     </nz-auto-option> -->
-  </nz-auto-optgroup>
-  <nz-auto-optgroup [nzLabel]="groupTopics" *ngIf="searchControl.value.length >= 3">
-    <ng-template #groupTopics>
-      <span>SERIES TOPICS</span>
-      <span style="float: right;">{{ filteredSeriesTopicsCount }} matches</span>
-    </ng-template>
-    <nz-auto-option *ngFor="let seriesTopics of filteredSeriesTopics" [nzValue]="seriesTopics.value" [innerHTML]="seriesTopics.label">
-    </nz-auto-option>
-    <!-- <nz-auto-option>
-      <a *ngIf="filteredSeriesTopicsCount >= 3">View All Series Topics Matches ></a>
+
+  <ng-container *ngIf="(routerData$ | async).state.url == '/series/tview' || (routerData$ | async).state.url == '/series/gview'">
+    <nz-auto-optgroup [nzLabel]="groupNames" *ngIf="searchControl.value.length >= 3">
+      <ng-template #groupNames>
+        <span>SERIES NAMES</span>
+        <span style="float: right;">{{ filteredSeriesNamesCount }} matches</span>
+      </ng-template>
+      <nz-auto-option *ngFor="let seriesName of filteredSeriesNames" [nzValue]="seriesName.value" [innerHTML]="seriesName.label">
+      </nz-auto-option>
+      <!-- <nz-auto-option>
+      <a *ngIf="filteredSeriesNamesCount >= 3">View All Series Name Matches ></a>
     </nz-auto-option> -->
-  </nz-auto-optgroup>
-  <nz-auto-optgroup [nzLabel]="groupNaics" *ngIf="searchControl.value.length >= 3">
-    <ng-template #groupNaics>
-      <span>SERIES NAICS</span>
-      <span style="float: right;">{{ filteredSeriesNaicsCount }} matches</span>
-    </ng-template>
-    <nz-auto-option *ngFor="let seriesNaics of filteredSeriesNaics" [nzValue]="seriesNaics.value" [innerHTML]="seriesNaics.label">
-    </nz-auto-option>
-    <!-- <nz-auto-option>
-      <a *ngIf="filteredSeriesNaicsCount >= 3">View All Series Naics Matches ></a>
-    </nz-auto-option> -->
-  </nz-auto-optgroup>
-  <nz-auto-optgroup [nzLabel]="groupTables" *ngIf="searchControl.value.length >= 3">
-    <ng-template #groupTables>
-      <span>SERIES TABLES</span>
-      <span style="float: right;">{{ filteredSeriesTablesCount }} matches</span>
-    </ng-template>
-    <nz-auto-option *ngFor="let seriesTables of filteredSeriesTables" [nzValue]="seriesTables.value" [innerHTML]="seriesTables.label">
-    </nz-auto-option>
-    <!-- <nz-auto-option>
-      <a *ngIf="filteredSeriesTablesCount >= 3">View All Series Tables Matches ></a>
-    </nz-auto-option> -->
-  </nz-auto-optgroup>
+    </nz-auto-optgroup>
+
+    <nz-auto-optgroup [nzLabel]="groupTopics" *ngIf="searchControl.value.length >= 3">
+      <ng-template #groupTopics>
+        <span>SERIES TOPICS</span>
+        <span style="float: right;">{{ filteredSeriesTopicsCount }} matches</span>
+      </ng-template>
+      <nz-auto-option *ngFor="let seriesTopics of filteredSeriesTopics" [nzValue]="seriesTopics.value" [innerHTML]="seriesTopics.label">
+      </nz-auto-option>
+    </nz-auto-optgroup>
+    <nz-auto-optgroup [nzLabel]="groupNaics" *ngIf="searchControl.value.length >= 3">
+      <ng-template #groupNaics>
+        <span>SERIES NAICS</span>
+        <span style="float: right;">{{ filteredSeriesNaicsCount }} matches</span>
+      </ng-template>
+      <nz-auto-option *ngFor="let seriesNaics of filteredSeriesNaics" [nzValue]="seriesNaics.value" [innerHTML]="seriesNaics.label">
+      </nz-auto-option>
+    </nz-auto-optgroup>
+    <nz-auto-optgroup [nzLabel]="groupTables" *ngIf="searchControl.value.length >= 3">
+      <ng-template #groupTables>
+        <span>SERIES TABLES</span>
+        <span style="float: right;">{{ filteredSeriesTablesCount }} matches</span>
+      </ng-template>
+      <nz-auto-option *ngFor="let seriesTables of filteredSeriesTables" [nzValue]="seriesTables.value" [innerHTML]="seriesTables.label">
+      </nz-auto-option>
+    </nz-auto-optgroup>
+  </ng-container>
+
+  <ng-container *ngIf="(routerData$ | async).state.url == '/logs/operations'">
+    <nz-auto-optgroup [nzLabel]="groupLogUsernames" *ngIf="searchControl.value.length >= 3">
+      <ng-template #groupLogUsernames>
+        <span>Logs Usernames</span>
+        <span style="float: right;">{{ filteredLogsUsernamesCount }} matches</span>
+      </ng-template>
+      <nz-auto-option *ngFor="let username of filteredLogsUsernames" [nzValue]="username.value" [innerHTML]="username.label">
+      </nz-auto-option>
+    </nz-auto-optgroup>
+  </ng-container>
 </nz-autocomplete>

@@ -33,7 +33,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DefaultInterceptor } from '@core';
 import { JWTInterceptor, SimpleInterceptor } from '@delon/auth';
 const INTERCEPTOR_PROVIDES = [
-  { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true }
 ];
 // #endregion
@@ -56,6 +56,7 @@ const APPINIT_PROVIDES = [
 // #endregion
 
 
+import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -78,6 +79,7 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     LayoutModule,
     RoutesModule,
+    AkitaNgRouterStoreModule,
     environment.production ? [] : AkitaNgDevtools
   ],
   providers: [

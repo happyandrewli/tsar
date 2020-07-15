@@ -8,9 +8,14 @@ import { OperationLogsState, OperationLogsStore } from './operation-logs.store';
 })
 export class OperationLogsQuery extends QueryEntity<OperationLogsState, OperationLog> {
   selectDate$ = this.select('date');
+  selectRange$ = this.select('range');
 
   get date() {
     return this.getValue().date;
+  }
+
+  get range() {
+    return this.getValue().range;
   }
 
   constructor(protected store: OperationLogsStore) {

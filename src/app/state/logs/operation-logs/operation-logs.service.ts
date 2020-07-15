@@ -34,4 +34,7 @@ export class OperationLogsService {
   updateDate(date: Date) {
     this.operationLogsStore.update({ date });
   }
+  updateRange(range: Date[]) {
+    this.operationLogsStore.update({ range });
+  }
 }

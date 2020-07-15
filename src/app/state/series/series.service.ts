@@ -58,7 +58,7 @@ export class SeriesService {
         this.updateFrom(statPeriods[0]);
         this.updateTo(statPeriods[statPeriods.length - 1]);
       }, error => {
-        console.warn(`StartupService.load: Network request faileddddddddd`, error);
+        // console.warn(`StartupService.load: Network request faileddddddddd`, error);
       })
     );
   }

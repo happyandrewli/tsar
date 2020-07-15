@@ -5,24 +5,32 @@ import { HeaderFullScreenComponent } from './default/header/components/fullscree
 import { HeaderSearchComponent } from './default/header/components/search.component';
 import { HeaderStorageComponent } from './default/header/components/storage.component';
 import { HeaderUserComponent } from './default/header/components/user.component';
+import { FilterPipe } from './default/header/filter.pipe';
 import { HeaderComponent } from './default/header/header.component';
 import { SidebarComponent } from './default/sidebar/sidebar.component';
 import { LayoutThemeBtnComponent } from './default/theme-btn/theme-btn.component';
 import { LayoutFullScreenComponent } from './fullscreen/fullscreen.component';
+
+import { AutoCompleteContentDirective } from '../shared/auto-complete/auto-complete-content.directive';
+import { AutoCompleteComponent } from '../shared/auto-complete/auto-complete.component';
+import { AutoCompleteDirective } from '../shared/auto-complete/auto-complete.directive';
+import { OptionComponent } from '../shared/auto-complete/option/option.component';
 
 const COMPONENTS = [
   LayoutDefaultComponent,
   LayoutFullScreenComponent,
   HeaderComponent,
   SidebarComponent,
-  LayoutThemeBtnComponent
+  LayoutThemeBtnComponent,
+  AutoCompleteComponent, OptionComponent, AutoCompleteDirective, AutoCompleteContentDirective
 ];
 
 const HEADERCOMPONENTS = [
   HeaderSearchComponent,
   HeaderFullScreenComponent,
   HeaderStorageComponent,
-  HeaderUserComponent
+  HeaderUserComponent,
+  FilterPipe
 ];
 
 // passport

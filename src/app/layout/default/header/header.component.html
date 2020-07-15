@@ -25,6 +25,20 @@
       </div>
     </li>
   </ul>
+
+  <!-- <input placeholder="Search..." [formControl]="control" [appAutoComplete]="autocomplete">
+
+  <app-autocomplete #autocomplete>
+    <ng-template appAutoCompleteContent>
+      <ng-container *ngIf="(options | filter: control.value) as result">
+        <app-option *ngFor="let option of result" [value]="option.label">
+          {{ option.label }}
+        </app-option>
+        <app-option class="no-result" *ngIf="!result.length">No result...</app-option>
+      </ng-container>
+    </ng-template>
+  </app-autocomplete> -->
+
   <header-search class="alain-default__search" [toggleChange]="searchToggleStatus"></header-search>
   <ul class="alain-default__nav">
     <!-- Settings -->

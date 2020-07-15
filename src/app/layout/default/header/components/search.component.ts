@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { RouterQuery } from '@datorama/akita-ng-router-store';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
@@ -27,7 +28,8 @@ export class HeaderSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private el: ElementRef,
               private seriesService: SeriesService,
               private seriesQuery: SeriesQuery,
-              private surveysService: SurveysService) { }
+              private surveysService: SurveysService,
+              private routerQuery: RouterQuery) { }
   qIpt: HTMLInputElement;
 
   @HostBinding('class.alain-default__search-focus')
@@ -37,7 +39,7 @@ export class HeaderSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   searchToggled = false;
 
   searchControl = new FormControl();
-
+  routerData$: Observable<any>;
   filteredSeriesNames: { value: string, label: string }[] = [];
   filteredSeriesNamesCount = 0;
   filteredSeriesTopics: { value: string, label: string }[] = [];
@@ -46,6 +48,9 @@ export class HeaderSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   filteredSeriesNaicsCount = 0;
   filteredSeriesTables: { value: string, label: string }[] = [];
   filteredSeriesTablesCount = 0;
+
+  filteredLogsUsernames: { value: string, label: string }[] = [];
+  filteredLogsUsernamesCount = 0;
 
   ngOnInit() {
     this.searchControl.patchValue(this.seriesQuery.searchTerm);
@@ -61,6 +66,8 @@ export class HeaderSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.surveysService.surveyChanged.pipe(untilDestroyed(this)).subscribe(() => {
       this.searchControl.setValue(this.seriesQuery.searchTerm);
     });
+
+    this.routerData$ = this.routerQuery.select();
   }
   ngAfterViewInit() {
     this.qIpt = (this.el.nativeElement as HTMLElement).querySelector('.ant-input') as HTMLInputElement;
@@ -68,48 +75,59 @@ export class HeaderSearchComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() { }
   runAutoComplete(val: string) {
-    this.seriesService.getSeriesNames(val, this.seriesQuery.filters, true).subscribe(filteredNames => {
-      this.filteredSeriesNames =
-        // filteredNames.filter((v, i) => filteredNames.indexOf(v) === i)
-        filteredNames.resource.map(fSeries => {
+    if (this.routerQuery.getValue().state.url === '/series/tview' || this.routerQuery.getValue().state.url === '/series/gview') {
+      this.seriesService.getSeriesNames(val, this.seriesQuery.filters, true).subscribe(filteredNames => {
+        this.filteredSeriesNames =
+          // filteredNames.filter((v, i) => filteredNames.indexOf(v) === i)
+          filteredNames.resource.map(fSeries => {
+            return {
+              value: fSeries.name, label: fSeries.name.replace(new RegExp(val, 'gi'), match => {
+                return '<a target="_blank">' + match + '</a>';
+              })
+            };
+          });
+        this.filteredSeriesNamesCount = filteredNames.meta.count;
+      });
+      this.seriesService.getSeriesTopics(val, this.seriesQuery.filters, true).subscribe(filteredTopics => {
+        this.filteredSeriesTopics = filteredTopics.resource.map(fSeries => {
           return {
-            value: fSeries.name, label: fSeries.name.replace(new RegExp(val, 'gi'), match => {
+            value: fSeries.topic, label: fSeries.topic.replace(new RegExp(val, 'gi'), match => {
               return '<a target="_blank">' + match + '</a>';
             })
           };
         });
-      this.filteredSeriesNamesCount = filteredNames.meta.count;
-    });
-    this.seriesService.getSeriesTopics(val, this.seriesQuery.filters, true).subscribe(filteredTopics => {
-      this.filteredSeriesTopics = filteredTopics.resource.map(fSeries => {
+        this.filteredSeriesTopicsCount = filteredTopics.meta.count;
+      });
+      this.seriesService.getSeriesNaics(val, this.seriesQuery.filters, true).subscribe(filteredNaics => {
+        this.filteredSeriesNaics = filteredNaics.resource.map(fSeries => {
+          return {
+            value: fSeries.naics, label: fSeries.naics.replace(new RegExp(val, 'gi'), match => {
+              return '<a target="_blank">' + match + '</a>';
+            })
+          };
+        });
+        this.filteredSeriesNaicsCount = filteredNaics.meta.count;
+      });
+      this.seriesService.getSeriesTables(val, this.seriesQuery.filters, true).subscribe(filteredTables => {
+        this.filteredSeriesTables = filteredTables.resource.map(fSeries => {
+          return {
+            value: fSeries.tbl, label: fSeries.tbl.replace(new RegExp(val, 'gi'), match => {
+              return '<a target="_blank">' + match + '</a>';
+            })
+          };
+        });
+        this.filteredSeriesTablesCount = filteredTables.meta.count;
+      });
+    } else if (this.routerQuery.getValue().state.url === '/logs/operations') {
+      this.filteredLogsUsernames = ['Andrew Li', 'Megha Signal', 'Jeffrey Shikany', 'Leon Mil', 'Charlie Nguyen'].map(username => {
         return {
-          value: fSeries.topic, label: fSeries.topic.replace(new RegExp(val, 'gi'), match => {
+          value: username, label: username.replace(new RegExp(val, 'gi'), match => {
             return '<a target="_blank">' + match + '</a>';
           })
         };
       });
-      this.filteredSeriesTopicsCount = filteredTopics.meta.count;
-    });
-    this.seriesService.getSeriesNaics(val, this.seriesQuery.filters, true).subscribe(filteredNaics => {
-      this.filteredSeriesNaics = filteredNaics.resource.map(fSeries => {
-        return {
-          value: fSeries.naics, label: fSeries.naics.replace(new RegExp(val, 'gi'), match => {
-            return '<a target="_blank">' + match + '</a>';
-          })
-        };
-      });
-      this.filteredSeriesNaicsCount = filteredNaics.meta.count;
-    });
-    this.seriesService.getSeriesTables(val, this.seriesQuery.filters, true).subscribe(filteredTables => {
-      this.filteredSeriesTables = filteredTables.resource.map(fSeries => {
-        return {
-          value: fSeries.tbl, label: fSeries.tbl.replace(new RegExp(val, 'gi'), match => {
-            return '<a target="_blank">' + match + '</a>';
-          })
-        };
-      });
-      this.filteredSeriesTablesCount = filteredTables.meta.count;
-    });
+    }
+
     return val;
   }
 
