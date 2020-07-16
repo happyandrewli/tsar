@@ -1,4 +1,5 @@
 import { ExceptionModule } from '@delon/abc/exception';
+import { FullContentModule } from '@delon/abc/full-content';
 import { GlobalFooterModule } from '@delon/abc/global-footer';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
 import { PageHeaderModule } from '@delon/abc/page-header';
@@ -22,6 +23,7 @@ export const SHARED_DELON_MODULES = [
   ResultModule,
   ExceptionModule,
   NoticeIconModule,
+  FullContentModule,
   SidebarNavModule,
   GlobalFooterModule,
   STModule,

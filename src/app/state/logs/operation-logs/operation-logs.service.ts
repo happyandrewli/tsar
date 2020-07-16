@@ -13,12 +13,28 @@ import { OperationLogsStore } from './operation-logs.store';
 export class OperationLogsService {
   constructor(private operationLogsStore: OperationLogsStore, private http: HttpClient, private surveysQuery: SurveysQuery) { }
 
-  get(date: Date) {
+  get(date: Date, range: Date[], keyword) {
     let params = new HttpParams();
     let dfParams = '';
-    if (date) {
-      dfParams += 'timestamp contains ' + `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+    // if (date) {
+    //   dfParams += 'timestamp contains ' + `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+    // }
+    if (range) {
+      dfParams += `(timestamp gte ${range[0].getFullYear()}-${('0' + (range[0].getMonth() + 1)).slice(-2)}-${('0' + range[0].getDate()).slice(-2)})`;
+      dfParams += ` and `;
+      const dateFixed = new Date(range[1]);
+      dateFixed.setDate(range[1].getDate() + 1);
+      dfParams += `(timestamp lte ${dateFixed.getFullYear()}-${('0' + (dateFixed.getMonth() + 1)).slice(-2)}-${('0' + dateFixed.getDate()).slice(-2)})`;
     }
+
+    if (keyword) {
+      if (dfParams) {
+        dfParams += ` and (user_name contains ${keyword})`;
+      } else {
+        dfParams += `(user_name contains ${keyword})`;
+      }
+    }
+
     if (dfParams) {
       params = params.append('filter', dfParams);
     }

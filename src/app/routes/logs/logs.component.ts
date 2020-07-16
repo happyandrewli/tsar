@@ -16,7 +16,7 @@ export class LogsComponent implements OnInit {
 
   tabs: any[] = [
     { key: 'operations', tab: 'Operation Logs' },
-    { key: 'changes', tab: 'Change Logs' }
+    // { key: 'changes', tab: 'Change Logs' }
   ];
 
   pos = 0;

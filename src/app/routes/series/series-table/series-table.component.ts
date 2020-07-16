@@ -74,6 +74,8 @@ export class SeriesTableComponent implements OnInit, OnDestroy {
   });
 
   isFullscreen = false;
+
+  scroll = { y: '230px' };
   ngOnInit() {
     this.initGroup();
 
@@ -299,5 +301,8 @@ export class SeriesTableComponent implements OnInit, OnDestroy {
   }
   toggleFullscreen(): void {
     this.isFullscreen = !this.isFullscreen;
+  }
+  fullChange(val: boolean) {
+    this.scroll = val ? { y: '350px' } : { y: '230px' };
   }
 }

@@ -11,15 +11,7 @@
   />
 </nz-input-group>
 
-<ng-template #prefixIcon>
-  <i nz-icon [nzType]="focus ? 'arrow-left' : 'search'" nzTheme="outline" [ngStyle]="{ color: focus ? '' : 'white' }"></i>
-</ng-template>
-
 <nz-autocomplete nzBackfill #auto nzDefaultActiveFirstOption="false">
-  <!-- <nz-auto-option>
-      <a *ngIf="filteredSeriesNamesCount >= 3">View All Series Name Matches ></a>
-    </nz-auto-option> -->
-
   <ng-container *ngIf="(routerData$ | async).state.url == '/series/tview' || (routerData$ | async).state.url == '/series/gview'">
     <nz-auto-optgroup [nzLabel]="groupNames" *ngIf="searchControl.value.length >= 3">
       <ng-template #groupNames>

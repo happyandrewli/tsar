@@ -8,6 +8,7 @@ import { switchMap } from 'rxjs/operators';
 import { OperationLog } from 'src/app/state/logs/operation-logs/operation-log.model';
 import { OperationLogsQuery } from 'src/app/state/logs/operation-logs/operation-logs.query';
 import { OperationLogsService } from 'src/app/state/logs/operation-logs/operation-logs.service';
+import { SeriesQuery } from 'src/app/state/series/series.query';
 
 @UntilDestroy()
 @Component({
@@ -17,7 +18,7 @@ import { OperationLogsService } from 'src/app/state/logs/operation-logs/operatio
 
 export class OperationLogsComponent implements OnInit {
 
-  constructor(private operationLogsService: OperationLogsService, private operationLogsQuery: OperationLogsQuery) { }
+  constructor(private operationLogsService: OperationLogsService, private operationLogsQuery: OperationLogsQuery, private seriesQuery: SeriesQuery) { }
   operationLogs$: Observable<OperationLog[]>;
   date = new FormControl();
   range = new FormControl();
@@ -54,9 +55,12 @@ export class OperationLogsComponent implements OnInit {
     this.date.setValue(this.operationLogsQuery.date);
     this.range.setValue(this.operationLogsQuery.range);
 
-    combineLatest([this.operationLogsQuery.selectDate$])
-      .pipe(switchMap(([date]) => {
-        return this.operationLogsService.get(date);
+    combineLatest([
+      this.operationLogsQuery.selectDate$,
+      this.operationLogsQuery.selectRange$,
+      this.seriesQuery.selectSearchTerm$])
+      .pipe(switchMap(([date, range, term]) => {
+        return this.operationLogsService.get(date, range, term);
       }), untilDestroyed(this)).subscribe({
         error() {
         }
