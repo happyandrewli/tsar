@@ -1,4 +1,5 @@
-<nz-input-group [nzAddOnBeforeIcon]="focus ? 'arrow-down' : 'search'">
+<!-- [nzAddOnBeforeIcon]="focus ? 'arrow-down' : 'search'" -->
+<nz-input-group [nzPrefix]="" [nzAddOnBeforeIcon]="focus ? 'arrow-down' : 'search'">
   <input
     type="text"
     nz-input
@@ -10,7 +11,9 @@
     (keydown.enter)="search($event)"
   />
 </nz-input-group>
-
+<ng-template #prefixIcon>
+  <i nz-icon [nzType]="focus ? 'arrow-down' : 'search'"></i>
+</ng-template>
 <nz-autocomplete nzBackfill #auto nzDefaultActiveFirstOption="false">
   <ng-container *ngIf="(routerData$ | async).state.url == '/series/tview' || (routerData$ | async).state.url == '/series/gview'">
     <nz-auto-optgroup [nzLabel]="groupNames" *ngIf="searchControl.value.length >= 3">

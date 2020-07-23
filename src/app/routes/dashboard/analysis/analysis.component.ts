@@ -28,7 +28,51 @@ export class DashboardAnalysisComponent implements OnInit {
     },
   ];
 
-  salesType = 'all';
+
+  viewData = [
+    { x: 'Private', y: 4123 },
+    { x: 'Public', y: 5877 }
+  ];
+  itemTypeData = [
+    {
+      x: 'Coffecient of Variation',
+      y: 4544
+    },
+    {
+      x: 'Estimate',
+      y: 3321
+    },
+    {
+      x: 'Imputation',
+      y: 3113
+    },
+    {
+      x: 'Standard Error',
+      y: 2341
+    },
+    {
+      x: 'Year to Year Difference',
+      y: 1231
+    },
+    {
+      x: 'Others',
+      y: 1231
+    }
+  ];
+  proportionData = this.itemTypeData;
+  proportionTitle = 'Item Types';
+  _proportionType = 'ITEM_TYPES';
+  set proportionType(newType: string) {
+    if (newType === 'ITEM_TYPES') {
+      this.proportionTitle = 'Item Types';
+      this.proportionData = this.itemTypeData;
+    } else if (newType === 'VIEWS') {
+      this.proportionTitle = 'Views';
+      this.proportionData = this.viewData;
+    }
+    this._proportionType = newType;
+  }
+
   salesPieData: any;
   salesTotal = 0;
 
@@ -1711,32 +1755,6 @@ export class DashboardAnalysisComponent implements OnInit {
         y2: 14
       }
     ],
-    salesTypeData: [
-      {
-        x: 'Appliances',
-        y: 4544
-      },
-      {
-        x: 'Food',
-        y: 3321
-      },
-      {
-        x: 'Heaht',
-        y: 3113
-      },
-      {
-        x: 'Clothes',
-        y: 2341
-      },
-      {
-        x: 'Vacation',
-        y: 1231
-      },
-      {
-        x: 'Others',
-        y: 1231
-      }
-    ],
     salesTypeDataOnline: [
       {
         x: '家用电器',
@@ -1865,4 +1883,5 @@ export class DashboardAnalysisComponent implements OnInit {
   };
   ngOnInit(): void {
   }
+
 }

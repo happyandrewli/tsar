@@ -4,6 +4,7 @@ import { ID } from '@datorama/akita';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { SeriesService } from 'src/app/state/series/series.service';
 import { Survey } from 'src/app/state/survey/survey.model';
 import { SurveysQuery } from 'src/app/state/survey/surveys.query';
 import { SurveysService } from 'src/app/state/survey/surveys.service';
@@ -14,7 +15,9 @@ import { SurveysService } from 'src/app/state/survey/surveys.service';
 })
 export class SeriesComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router, private message: NzMessageService, private surveysQuery: SurveysQuery, private surveysService: SurveysService) { }
+  constructor(private router: Router, private message: NzMessageService,
+              private surveysQuery: SurveysQuery, private surveysService: SurveysService,
+              private seriesService: SeriesService) { }
 
   tabs: any[] = [
     { key: 'tview', tab: 'Table View' },
@@ -28,6 +31,7 @@ export class SeriesComponent implements OnInit, OnDestroy {
   private router$: Subscription;
   ngOnDestroy(): void {
     this.router$.unsubscribe();
+    this.seriesService.resetSearchTerm.emit(true);
   }
   ngOnInit(): void {
     this.router$ = this.router.events.pipe(filter(e => e instanceof ActivationEnd)).subscribe(() => this.setActive());

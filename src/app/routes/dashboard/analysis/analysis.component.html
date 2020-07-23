@@ -2,7 +2,7 @@
   <div nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="6">
     <g2-card [title]="'Total Sales'" total="$ 126,560" contentHeight="44px" [action]="action1" [footer]="footer1">
       <ng-template #action1>
-        <i nz-tooltip [nzTitle]="'introduce'" nz-icon nzType="info-circle"></i>
+        <i nz-tooltip [nzTooltipTitle]="'introduce'" nz-icon nzType="info-circle"></i>
       </ng-template>
       <trend flag="up" style="display: block; margin-top: 2px;">
         Week Ratio
@@ -75,13 +75,13 @@
 
 <div nz-row [nzGutter]="24">
   <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="12">
-    <nz-card [nzBordered]="false" [nzTitle]="'Top Searches'" [nzExtra]="extraOp" class="mb-0">
+    <nz-card [nzBordered]="false" [nzTitle]="'Top Series'" [nzExtra]="extraOp" class="mb-0">
       <ng-template #extraOp>
         <i nz-dropdown [nzDropdownMenu]="extraOpMenu" nz-icon nzType="ellipsis" class="icon-group"></i>
         <nz-dropdown-menu #extraOpMenu="nzDropdownMenu">
           <ul nz-menu>
-            <li nz-menu-item>Operations 1</li>
-            <li nz-menu-item>Operations 2</li>
+            <li nz-menu-item>Ascending</li>
+            <li nz-menu-item>descending</li>
           </ul>
         </nz-dropdown-menu>
       </ng-template>
@@ -112,7 +112,7 @@
   <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="12">
     <nz-card
       [nzBordered]="false"
-      [nzTitle]="'The Proportion of Sales'"
+      [nzTitle]="'The Proportion of ' + proportionTitle"
       [nzBodyStyle]="{ 'padding.px': 24 }"
       [nzExtra]="extra"
       class="sales-card mb-0"
@@ -120,30 +120,20 @@
     >
       <ng-template #extra>
         <div class="sales-card-extra">
-          <i nz-dropdown [nzDropdownMenu]="salesExtraMenu" nzPlacement="bottomLeft" nz-icon nzType="ellipsis" class="icon-group"></i>
-          <nz-dropdown-menu #salesExtraMenu="nzDropdownMenu">
-            <ul nz-menu>
-              <li nz-menu-item>OP 1</li>
-              <li nz-menu-item>OP 2</li>
-            </ul>
-          </nz-dropdown-menu>
           <div class="sales-type-radio">
-            <nz-radio-group [(ngModel)]="salesType">
-              <label nz-radio-button [nzValue]="'all'">
-                All
+            <nz-radio-group [(ngModel)]="proportionType">
+              <label nz-radio-button [nzValue]="'ITEM_TYPES'">
+                Item Types
               </label>
-              <label nz-radio-button [nzValue]="'online'">
-                Online
-              </label>
-              <label nz-radio-button [nzValue]="'offline'">
-                Stores
+              <label nz-radio-button [nzValue]="'VIEWS'">
+                Views
               </label>
             </nz-radio-group>
           </div>
         </div>
       </ng-template>
-      <h4 class="margin:8px 0 32px 0;">Sale</h4>
-      <g2-pie [data]="data.salesTypeData" [hasLegend]="true" [subTitle]="''" [height]="248" [lineWidth]="4" [total]="salesTotal"> </g2-pie>
+      <h4 class="margin:8px 0 32px 0;">{{ proportionTitle }}</h4>
+      <g2-pie [data]="proportionData" [hasLegend]="true" [subTitle]="''" [height]="248" [lineWidth]="4"> </g2-pie>
     </nz-card>
   </div>
 </div>

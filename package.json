@@ -32,6 +32,7 @@
     "@antv/data-set": "^0.11.4",
     "@antv/g2": "^4.0.12",
     "@datorama/akita": "^4.23.2",
+    "@datorama/akita-ng-forms-manager": "^5.0.2",
     "@datorama/akita-ng-router-store": "^5.1.6",
     "@delon/abc": "^9.5.2",
     "@delon/acl": "^9.5.2",

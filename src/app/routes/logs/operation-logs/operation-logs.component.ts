@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { STColumn } from '@delon/abc/st/table';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -9,6 +9,7 @@ import { OperationLog } from 'src/app/state/logs/operation-logs/operation-log.mo
 import { OperationLogsQuery } from 'src/app/state/logs/operation-logs/operation-logs.query';
 import { OperationLogsService } from 'src/app/state/logs/operation-logs/operation-logs.service';
 import { SeriesQuery } from 'src/app/state/series/series.query';
+import { SeriesService } from 'src/app/state/series/series.service';
 
 @UntilDestroy()
 @Component({
@@ -16,9 +17,12 @@ import { SeriesQuery } from 'src/app/state/series/series.query';
   templateUrl: 'operation-logs.component.html'
 })
 
-export class OperationLogsComponent implements OnInit {
+export class OperationLogsComponent implements OnInit, OnDestroy {
 
-  constructor(private operationLogsService: OperationLogsService, private operationLogsQuery: OperationLogsQuery, private seriesQuery: SeriesQuery) { }
+  constructor(private operationLogsService: OperationLogsService,
+              private operationLogsQuery: OperationLogsQuery,
+              private seriesQuery: SeriesQuery,
+              private seriesService: SeriesService) { }
   operationLogs$: Observable<OperationLog[]>;
   date = new FormControl();
   range = new FormControl();
@@ -48,6 +52,9 @@ export class OperationLogsComponent implements OnInit {
   ];
 
   today = new Date();
+  ngOnDestroy(): void {
+    this.seriesService.resetSearchTerm.emit(true);
+  }
 
   ngOnInit() {
     this.operationLogs$ = this.operationLogsQuery.selectAll();

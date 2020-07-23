@@ -68,6 +68,11 @@ export class HeaderSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.routerData$ = this.routerQuery.select();
+
+    this.seriesService.resetSearchTerm.pipe(untilDestroyed(this)).subscribe(() => {
+      this.seriesService.updateSearchTerm('');
+      this.searchControl.patchValue(this.seriesQuery.searchTerm);
+    });
   }
   ngAfterViewInit() {
     this.qIpt = (this.el.nativeElement as HTMLElement).querySelector('.ant-input') as HTMLInputElement;

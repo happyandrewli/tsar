@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ID } from '@datorama/akita';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -11,6 +11,8 @@ import { SeriesStore } from './series.store';
 @Injectable({ providedIn: 'root' })
 export class SeriesService {
   constructor(private seriesStore: SeriesStore, private http: HttpClient, private surveysQuery: SurveysQuery) { }
+
+  @Output() resetSearchTerm: EventEmitter<boolean> = new EventEmitter();
 
   getAll(keyword: string, uploadedNames: string, filters, pageNumber: number, pageSize: number) {
     // console.log(this.seriesQuery.getHasCache());
