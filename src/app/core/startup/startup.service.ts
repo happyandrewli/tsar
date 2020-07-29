@@ -37,8 +37,8 @@ export class StartupService {
       const tokenData = this.tokenService.get();
       if (!tokenData.token || !tokenData.groupMembership) {
         this.injector.get(Router).navigateByUrl('/passport/login');
-        resolve({});
-        return;
+        resolve();
+        return [];
       }
 
       const surveys = [];
@@ -51,7 +51,7 @@ export class StartupService {
           surveys.push({ id: 3, type: 'M', title: 'MWTS', description: 'Monthly Wholesale Trade Survey', server: 'Steps 79', selected: false, databaseTable: 'mwts' });
         }
       });
-      surveys.push({ id: 4, type: 'A', title: 'SAS-KING', description: 'Beefed up SAS17 with a million fake records', server: 'Steps 78', selected: false, databaseTable: 'tsarpoc' });
+      // surveys.push({ id: 4, type: 'A', title: 'SAS-KING', description: 'Beefed up SAS17 with a million fake records', server: 'Steps 78', selected: false, databaseTable: 'tsarpoc' });
       this.surveysStore.set(surveys);
       this.surveysStore.setActive(surveys[0].id);
 

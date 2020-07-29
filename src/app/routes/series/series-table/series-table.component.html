@@ -1,5 +1,4 @@
-<!-- style="overflow: auto;" -->
-<full-content style="overflow: auto;">
+<app-magical-expander [fullscreen]="isFullscreen">
   <nz-card>
     <div nz-row class="mb-md">
       <div nz-col nzMd="24" nzLg="20">
@@ -9,8 +8,7 @@
         <div class="text-right">
           <nz-space>
             <nz-space-item>
-              <!-- full-toggle  -->
-              <button nz-button [nzType]="'default'" full-toggle (click)="toggleFullscreen()">
+              <button nz-button [nzType]="'default'" (click)="toggleFullscreen()">
                 <i nz-icon [nzType]="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"></i>
               </button>
             </nz-space-item>
@@ -54,8 +52,8 @@
               <nz-dropdown-menu #exportMenu="nzDropdownMenu">
                 <ul nz-menu>
                   <li nz-menu-item (click)="download('csv')"><i nz-icon nzType="file-text" nzTheme="outline"></i>CSV</li>
-                  <li nz-menu-item><i nz-icon nzType="file-excel" nzTheme="outline" disabled></i>Excel</li>
-                  <li nz-menu-item><i nz-icon nzType="file-pdf" nzTheme="outline" disabled></i>PDF</li>
+                  <li nz-menu-item [nzDisabled]="true"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</li>
+                  <li nz-menu-item [nzDisabled]="true"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</li>
                 </ul>
               </nz-dropdown-menu>
             </nz-space-item>
@@ -138,10 +136,7 @@
           </tr>
           <tr [nzExpand]="isExpanded == 'E' ? true : false">
             <td colspan="9">
-              <!-- <div nz-text><strong>Topic: </strong>{{series.topic}}</div> -->
-              <!-- <div nz-text><strong>Table: </strong>{{series.tbl}}</div> -->
               <div nz-text><strong>Flag: </strong>{{ series.flag }}</div>
-              <!-- <div nz-text><strong>Naics: </strong>{{series.naics}}</div> -->
               <div nz-text><strong>Form: </strong>{{ series.form }}</div>
               <div nz-text><strong>Item: </strong>{{ series.item }}</div>
               <span nz-text><strong>Data Type: </strong>{{ series.data_type }}</span>
@@ -155,13 +150,13 @@
       </tbody>
     </nz-table>
   </nz-card>
-</full-content>
+</app-magical-expander>
 <nz-drawer
   [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
   [nzMaskClosable]="false"
   [nzWidth]="720"
   [nzVisible]="isVisible"
-  nzTooltipTitle="Add/Edit Series"
+  nzTitle="Add/Edit Series"
 >
   <form nz-form [formGroup]="seriesForm">
     <div nz-row nzGutter="8">
@@ -309,7 +304,7 @@
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
-    <li nz-submenu nzTooltipTitle="Edit Field">
+    <li nz-submenu nzTitle="Edit Field">
       <ul>
         <li nz-menu-item (click)="openEditTopicDrawer()">Topic</li>
         <li nz-menu-item (click)="openEditTblDrawer()">Table</li>
@@ -317,7 +312,7 @@
     </li>
   </ul>
 </nz-dropdown-menu>
-<nz-drawer [nzVisible]="editTblVisible" nzPlacement="right" nzTooltipTitle="Edit Table Field" [nzWidth]="320">
+<nz-drawer [nzVisible]="editTblVisible" nzPlacement="right" nzTitle="Edit Table Field" [nzWidth]="320">
   <nz-alert
     nzType="info"
     nzMessage="Informational Notes"
@@ -325,6 +320,7 @@
     nzShowIcon
   >
   </nz-alert>
+  <br />
   <form nz-form [formGroup]="validateEditTblForm">
     <div nz-row>
       <div nz-col nzSpan="24">
@@ -350,7 +346,7 @@
   </div>
 </nz-drawer>
 
-<nz-drawer [nzVisible]="editTopicVisible" nzPlacement="right" nzTooltipTitle="Edit Topic Field" [nzWidth]="320">
+<nz-drawer [nzVisible]="editTopicVisible" nzPlacement="right" nzTitle="Edit Topic Field" [nzWidth]="320">
   <nz-alert
     nzType="info"
     nzMessage="Informational Notes"
@@ -358,6 +354,7 @@
     nzShowIcon
   >
   </nz-alert>
+  <br />
   <form nz-form [formGroup]="validateEditTopicForm">
     <div nz-row>
       <div nz-col nzSpan="24">

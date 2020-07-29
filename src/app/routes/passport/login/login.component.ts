@@ -5,9 +5,11 @@ import { StartupService } from '@core';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { DA_SERVICE_TOKEN, ITokenService, SocialService } from '@delon/auth';
 import { _HttpClient } from '@delon/theme';
+import { Idle } from '@ng-idle/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { catchError } from 'rxjs/operators';
 import { DFAPI_AUTH } from 'src/app/api';
+import { AppService } from 'src/app/app.service';
 
 @Component({
   selector: 'passport-login',
@@ -26,12 +28,16 @@ export class UserLoginComponent implements OnDestroy {
     private startupSrv: StartupService,
     public http: _HttpClient,
     public msg: NzMessageService,
+    private appService: AppService,
+    private idle: Idle
   ) {
     this.form = fb.group({
       userName: [null, [Validators.required, Validators.minLength(4)]],
       password: [null, Validators.required],
       remember: [true]
     });
+    // this.appService.setUserLoggedIn(false);
+    this.idle.stop();
   }
 
   get userName() {
@@ -85,6 +91,8 @@ export class UserLoginComponent implements OnDestroy {
           if (url.includes('/passport')) {
             url = '/';
           }
+          // this.appService.setUserLoggedIn(true);
+          this.idle.watch();
           this.router.navigateByUrl(url);
         });
       });

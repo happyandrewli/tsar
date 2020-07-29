@@ -67,6 +67,7 @@ export class SeriesService {
 
   download(keyword: string, uploadedNames: string, filters, type: string) {
     let params = new HttpParams();
+    const headers = { 'X-DreamFactory-Api-Key': DFAPI_KEY };
     let dfParams = '';
     if (keyword) {
       dfParams += '((name contains ' + keyword + ')' + ' or ' + '(topic contains ' + keyword + ')' + ' or ' + '(tbl contains ' + keyword + ')' + ' or ' + '(naics contains ' + keyword + '))';
@@ -92,7 +93,7 @@ export class SeriesService {
     // }
 
     return this.http.get(`${DFAPI}/_table/${this.surveysQuery.getActive().databaseTable}`,
-      { params, responseType: 'arraybuffer' })
+      { params, headers, responseType: 'arraybuffer' })
       .pipe(
         map((file: ArrayBuffer) => {
           return file;

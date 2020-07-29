@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
+import { MagicalExpanderComponent } from '../../shared/magical-expander/magical-expander.component';
 
 import { FavoritesModule } from '../favorites/favorites.module';
 
@@ -16,6 +17,7 @@ import { SeriesComponent } from './series.component';
 
 const DIALOG_COMPONENTS = [];
 const COMPONENTS = [
+  MagicalExpanderComponent,
   SeriesComponent,
   SeriesTableComponent,
   SeriesGraphComponent,

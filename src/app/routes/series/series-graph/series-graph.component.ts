@@ -27,6 +27,7 @@ export class SeriesGraphComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   showAdvSearch = true;
+  isFullscreen = false;
   ngOnDestroy(): void {
     // throw new Error("Method not implemented.");
   }
@@ -138,5 +139,8 @@ export class SeriesGraphComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   toggleAdvSearch() {
     this.showAdvSearch = !this.showAdvSearch;
+  }
+  toggleFullscreen(): void {
+    this.isFullscreen = !this.isFullscreen;
   }
 }
