@@ -54,6 +54,8 @@ export class HeaderSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   filteredLogsUsernames: { value: string, label: string }[] = [];
   filteredLogsUsernamesCount = 0;
 
+  @ViewChild('globalSearch') globalSearch: ElementRef;
+
   ngOnInit() {
     this.searchControl.patchValue(this.seriesQuery.searchTerm);
     const searchText$: Observable<string> = this.searchControl.valueChanges.pipe(
@@ -152,6 +154,10 @@ export class HeaderSearchComponent implements OnInit, AfterViewInit, OnDestroy {
 
   search(event) {
     event.target.blur();
+  }
+  selectionChanged(value) {
+    // console.log(this.globalSearch.nativeElement);
+    setTimeout(() => this.globalSearch.nativeElement.blur(), 300);
   }
 
   // @ViewChild('globalSearch', { read: NzAutocompleteTriggerDirective })

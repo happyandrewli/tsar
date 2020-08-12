@@ -8,14 +8,14 @@
     (focus)="qFocus()"
     (blur)="qBlur($event.target?.value)"
     placeholder="Search for series, logs..."
-    [nzAutocomplete]="auto"
+    [appAutocomplete]="auto"
     (keydown.enter)="search($event)"
   />
 </nz-input-group>
 <ng-template #prefixIcon>
   <i nz-icon [nzType]="focus ? 'arrow-down' : 'search'"></i>
 </ng-template>
-<nz-autocomplete nzBackfill="true" #auto nzDefaultActiveFirstOption="false">
+<nz-autocomplete nzBackfill="true" #auto nzDefaultActiveFirstOption="false" (selectionChange)="selectionChanged($event)">
   <ng-container *ngIf="(routerData$ | async).state.url == '/series/tview' || (routerData$ | async).state.url == '/series/gview'">
     <nz-auto-optgroup [nzLabel]="groupNames" *ngIf="searchControl.value.length >= 3">
       <ng-template #groupNames>

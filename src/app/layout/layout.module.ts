@@ -12,6 +12,7 @@ import { LayoutThemeBtnComponent } from './default/theme-btn/theme-btn.component
 import { LayoutFullScreenComponent } from './fullscreen/fullscreen.component';
 
 import { AutoCompleteContentDirective } from '../shared/auto-complete/auto-complete-content.directive';
+import { StepsAutocompleteTriggerDirective } from '../shared/auto-complete/auto-complete-trigger.directive';
 import { AutoCompleteComponent } from '../shared/auto-complete/auto-complete.component';
 import { AutoCompleteDirective } from '../shared/auto-complete/auto-complete.directive';
 import { OptionComponent } from '../shared/auto-complete/option/option.component';
@@ -22,7 +23,7 @@ const COMPONENTS = [
   HeaderComponent,
   SidebarComponent,
   LayoutThemeBtnComponent,
-  AutoCompleteComponent, OptionComponent, AutoCompleteDirective, AutoCompleteContentDirective
+  AutoCompleteComponent, OptionComponent, AutoCompleteDirective, AutoCompleteContentDirective, StepsAutocompleteTriggerDirective
 ];
 
 const HEADERCOMPONENTS = [
