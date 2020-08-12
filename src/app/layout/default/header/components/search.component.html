@@ -8,7 +8,7 @@
     (focus)="qFocus()"
     (blur)="qBlur($event.target?.value)"
     placeholder="Search for series, logs..."
-    [appAutocomplete]="auto"
+    [stepsAutocomplete]="auto"
     (keydown.enter)="search($event)"
   />
 </nz-input-group>

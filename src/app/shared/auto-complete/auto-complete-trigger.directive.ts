@@ -35,7 +35,7 @@ export function getStepsAutocompleteMissingPanelError(): Error {
 }
 
 @Directive({
-  selector: `input[appAutocomplete], textarea[appAutocomplete]`,
+  selector: `input[stepsAutocomplete], textarea[stepsAutocomplete]`,
   exportAs: 'stepsAutocompleteTrigger',
   providers: [STEPS_AUTOCOMPLETE_VALUE_ACCESSOR],
   host: {
