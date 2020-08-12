@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { RouterQuery } from '@datorama/akita-ng-router-store';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -7,6 +7,8 @@ import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/oper
 import { SeriesQuery } from 'src/app/state/series/series.query';
 import { SeriesService } from 'src/app/state/series/series.service';
 import { SurveysService } from 'src/app/state/survey/surveys.service';
+// import { NzAutocompleteTriggerDirective } from 'ng-zorro-antd/auto-complete/ng-zorro-antd-auto-complete';
+
 
 @UntilDestroy()
 @Component({
@@ -124,7 +126,8 @@ export class HeaderSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         this.filteredSeriesTablesCount = filteredTables.meta.count;
       });
     } else if (this.routerQuery.getValue().state.url === '/logs/operations') {
-      this.filteredLogsUsernames = ['Andrew Li', 'Megha Signal', 'Jeffrey Shikany', 'Leon Mil', 'Charlie Nguyen'].map(username => {
+      // 'Andrew Li', 'Megha Signal', 'Jeffrey Shikany', 'Leon Mil', 'Charlie Nguyen'
+      this.filteredLogsUsernames = ['mil00001', 'li000340', 'shika001', 'singa002', 'nguye324'].map(username => {
         return {
           value: username, label: username.replace(new RegExp(val, 'gi'), match => {
             return '<a target="_blank">' + match + '</a>';
@@ -150,4 +153,7 @@ export class HeaderSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   search(event) {
     event.target.blur();
   }
+
+  // @ViewChild('globalSearch', { read: NzAutocompleteTriggerDirective })
+  // autoComplete: NzAutocompleteTriggerDirective;
 }
