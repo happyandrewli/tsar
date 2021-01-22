@@ -45,7 +45,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -62,14 +61,6 @@
                   "maximumError": "10kb"
                 }
               ]
-            },
-            "hmr": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.hmr.ts"
-                }
-              ]
             }
           }
         },
@@ -82,10 +73,6 @@
           "configurations": {
             "production": {
               "browserTarget": "tsar:build:production"
-            },
-            "hmr": {
-              "browserTarget": "tsar:build:hmr",
-              "hmr": true
             }
           }
         },
@@ -164,19 +151,23 @@
     },
     "@schematics/angular:module": {
       "routing": true,
-      "spec": false
+      "spec": false,
+      "skipTests": true
     },
     "@schematics/angular:component": {
       "spec": false,
       "flat": false,
       "inlineStyle": true,
-      "inlineTemplate": false
+      "inlineTemplate": false,
+      "skipTests": true
     },
     "@schematics/angular:directive": {
-      "spec": false
+      "spec": false,
+      "skipTests": true
     },
     "@schematics/angular:service": {
-      "spec": false
+      "spec": false,
+      "skipTests": true
     }
   },
   "cli": {

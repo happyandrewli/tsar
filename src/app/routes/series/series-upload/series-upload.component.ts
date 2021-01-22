@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { UploadFile, UploadXHRArgs } from 'ng-zorro-antd/upload';
+import { NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
 
 import { FileSaverService } from 'ngx-filesaver';
 
@@ -53,7 +53,7 @@ export class SeriesUploadComponent implements OnInit, OnDestroy {
     this.search();
   }
 
-  hanldeUploadChange(info: { file: UploadFile }): void {
+  hanldeUploadChange(info: { file: NzUploadFile }): void {
     switch (info.file.status) {
       case 'uploading':
         this.uploading = true;
@@ -71,7 +71,7 @@ export class SeriesUploadComponent implements OnInit, OnDestroy {
     }
 
   }
-  beforeUpload = (file: UploadFile) => {
+  beforeUpload = (file: NzUploadFile) => {
     const fileReader = new FileReader();
     fileReader.onload = (e) => { };
 
@@ -85,7 +85,7 @@ export class SeriesUploadComponent implements OnInit, OnDestroy {
     });
   }
 
-  customReq = (item: UploadXHRArgs) => {
+  customReq = (item: NzUploadXHRArgs) => {
     // Create a FormData here to store files and other parameters.
     const formData = new FormData();
     formData.append('file', item.file as any);

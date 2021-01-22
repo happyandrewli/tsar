@@ -7,7 +7,7 @@
   [nzType]="itemTypeButtonStyle == 'selected' ? 'primary' : 'default'"
   nzPopoverPlacement="bottomLeft"
   [(nzVisible)]="visible"
-  (nzVisibleChange)="close()"
+  (nzPopoverVisibleChange)="close()"
 >
   {{ itemTypeButtonText }}
 </button>

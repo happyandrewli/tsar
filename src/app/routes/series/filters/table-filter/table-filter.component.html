@@ -7,7 +7,7 @@
   [nzType]="tableButtonStyle == 'selected' ? 'primary' : 'default'"
   nzPopoverPlacement="bottomLeft"
   [(nzVisible)]="visible"
-  (nzVisibleChange)="close()"
+  (nzPopoverVisibleChange)="close()"
 >
   {{ tableButtonText }}
 </button>

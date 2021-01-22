@@ -20,7 +20,7 @@ export class GlobalConfigModule {
     throwIfAlreadyLoaded(parentModule, 'GlobalConfigModule');
   }
 
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<GlobalConfigModule> {
     return {
       ngModule: GlobalConfigModule,
       providers: [...alainProvides],
