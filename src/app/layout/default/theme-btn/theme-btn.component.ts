@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, Renderer2 } from '@angular/core';
 import { AlainChartConfig, AlainConfigService } from '@delon/util';
 
-type SiteTheme = 'default' | 'dark' | 'compact';
+type SiteTheme = 'default' | 'dark' | 'compact' | 'aliyun' | 'dust';
 
 @Component({
   selector: 'layout-theme-btn',
@@ -41,7 +41,11 @@ export class LayoutThemeBtnComponent implements OnInit {
       style.type = 'text/css';
       style.rel = 'stylesheet';
       style.id = 'site-theme';
-      style.href = `assets/style.${theme}.css`;
+      if (theme === 'aliyun') {
+        style.href = `${theme}.css`;
+      } else {
+        style.href = `assets/style.${theme}.css`;
+      }
 
       localStorage.setItem('site-theme', theme);
       document.body.append(style);

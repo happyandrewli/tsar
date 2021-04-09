@@ -6,14 +6,14 @@
   [nzGhost]="itemTypeButtonStyle == 'selected' ? true : false"
   [nzType]="itemTypeButtonStyle == 'selected' ? 'primary' : 'default'"
   nzPopoverPlacement="bottomLeft"
-  [(nzVisible)]="visible"
+  [(nzPopoverVisible)]="visible"
   (nzPopoverVisibleChange)="close()"
 >
   {{ itemTypeButtonText }}
 </button>
 
 <ng-template #itemTemplate>
-  <nz-checkbox-wrapper style="width: 260px;">
+  <nz-checkbox-wrapper style="width: 260px">
     <div nz-row>
       <div nz-col nzSpan="24" *ngFor="let itemType of itemTypes">
         <label nz-checkbox nzValue="itemType.value" [(ngModel)]="itemType.checked">{{ itemType.label }}</label>

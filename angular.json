@@ -28,11 +28,22 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+              "src/styles.less",
+              {
+                "input": "src/styles/default.less",
+                "bundleName": "default",
+                "inject": false
+              },
+              {
+                "input":"src/styles/aliyun.less",
+                "bundleName": "aliyun",
+                "inject": false
+              }
             ],
-            "scripts": [
-              "node_modules/ajv/dist/ajv.bundle.js"
-            ]
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles/themes"]
+            },
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -96,9 +107,7 @@
             "styles": [
               "src/styles.less"
             ],
-            "scripts": [
-              "node_modules/ajv/dist/ajv.bundle.js"
-            ]
+            "scripts": []
           }
         },
         "lint": {

@@ -60,13 +60,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
     idle.onIdleStart.subscribe(() => {
       this.idleState = 'You\'ve gone idle!';
-      console.log(this.idleState);
+      // console.log(this.idleState);
       this.isVisible = true;
     });
 
     idle.onTimeoutWarning.subscribe((countdown) => {
       this.idleState = 'You will time out in ' + countdown + ' seconds!';
-      console.log(this.idleState);
+      // console.log(this.idleState);
     });
 
     // sets the ping interval to 15 seconds

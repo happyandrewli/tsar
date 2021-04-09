@@ -37,7 +37,7 @@ export class StartupService {
       const tokenData = this.tokenService.get();
       if (!tokenData.token || !tokenData.groupMembership) {
         this.injector.get(Router).navigateByUrl('/passport/login');
-        resolve();
+        resolve(null);
         return [];
       }
 

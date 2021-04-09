@@ -24,7 +24,7 @@ export class DashboardAnalysisComponent implements OnInit {
       title: 'direction',
       index: 'range',
       render: 'range',
-      sorter: (a, b) => a.range - b.range,
+      // sorter: (a, b) => a.range - b.range,
     },
   ];
 
